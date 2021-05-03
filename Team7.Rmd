@@ -12,7 +12,10 @@ The data is available on the urls below:
 Before loading data, we use readxl package to load them
 ```{r}
 #install.packages('readxl')
+#install.packages('lubridate')
 library(readxl)
+library(lubridate)
+library(dplyr)
 ```
 
 At first, load data
@@ -30,7 +33,37 @@ summary(df)
 We saw unnecessary columns
 we decided to drop: 
 ```{r}
+#colnames(df)
 
+colnames(df)[1] <- 'Name'
+colnames(df)[14] <- 'Release_Date'
+colnames(df)[17] <- 'Nationality'
+colnames(df)[18] <- 'Total_screens'
+colnames(df)[19] <- 'Box_office'
+colnames(df)[20] <- 'Audience'
+colnames(df)[23] <- 'Genre'
+colnames(df)[24] <- 'Rate'
+colnames(df)[25] <- 'Artistic'
+
+colnames(df)
 ```
 
+```{r}
+df_edit_col <- df %>% select(Name, Release_Date, Nationality, 
+                      Total_screens, Box_office, Audience,
+                      Genre, Rate, Artistic)
+
+#View(df_edit_col)
+```
+```{r}
+df_edit_col$Release_Date <- as.Date(myDf$Release_Date, origin='1900-01-01')
+
+#df_edit_col$Release_Date
+
+#View(df_edit_col)
+```
+
+```{r}
+na.omit(df_edit_col)
+```
 
