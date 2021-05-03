@@ -1,0 +1,29 @@
+---
+title: "Team_7"
+output: html_document
+---
+This document describes processes of data analysis of movie.
+The data came from Kofic, which is Korean Film Council.
+The data is available on the urls below:
+- all movies listed in Kofic (https://www.kobis.or.kr/kobis/business/mast/mvie/searchMovieList.do)
+- Data related with sales rev etc.
+(https://www.kobis.or.kr/kobis/business/stat/offc/searchOfficHitTotList.do?searchMode=year)
+
+Before loading data, we use readxl package to load them
+```{r}
+#install.packages('readxl')
+library(readxl)
+```
+
+At first, load data
+this r codes are encoded as 'utf-8'
+if errors on loading data, reopen this document with 'utf-8'
+```{r}
+df <- read_excel('(NEW2)(Merged) Movie Data.xlsx')
+head(df)
+```
+```{r}
+
+```
+
+
