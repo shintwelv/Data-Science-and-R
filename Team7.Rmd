@@ -2,6 +2,7 @@
 title: "Team_7"
 output: html_document
 ---
+---Description----
 This document describes processes of data analysis of movie.
 The data came from Kofic, which is Korean Film Council.
 The data is available on the urls below:
@@ -9,6 +10,7 @@ The data is available on the urls below:
 - Data related with sales rev etc.
 (https://www.kobis.or.kr/kobis/business/stat/offc/searchOfficHitTotList.do?searchMode=year)
 
+---Data Cleaning----
 Before loading data, we use readxl package to load them
 ```{r}
 #install.packages('readxl')
@@ -31,7 +33,7 @@ Check data
 summary(df)
 ```
 We saw unnecessary columns
-we decided to drop: 
+Change name of column to english for easier processing
 ```{r}
 #colnames(df)
 
@@ -48,6 +50,7 @@ colnames(df)[25] <- 'Artistic'
 colnames(df)
 ```
 
+we decided to drop: column number 2~13, 15, 16, 21, 22
 ```{r}
 df_edit_col <- df %>% select(Name, Release_Date, Nationality, 
                       Total_screens, Box_office, Audience,
@@ -55,6 +58,8 @@ df_edit_col <- df %>% select(Name, Release_Date, Nationality,
 
 #View(df_edit_col)
 ```
+
+Convert Release Date from numeric to as.Date
 ```{r}
 df_edit_col$Release_Date <- as.Date(myDf$Release_Date, origin='1900-01-01')
 
@@ -63,6 +68,7 @@ df_edit_col$Release_Date <- as.Date(myDf$Release_Date, origin='1900-01-01')
 #View(df_edit_col)
 ```
 
+We skip rows with NAs
 ```{r}
 na.omit(df_edit_col)
 ```
