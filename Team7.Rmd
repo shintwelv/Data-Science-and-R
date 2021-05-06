@@ -1,4 +1,9 @@
 ---
+title: "Group Project"
+output: html_document
+---
+
+---
 title: "Team_7"
 output: html_document
 ---
@@ -13,8 +18,8 @@ The data is available on the urls below:
 ---Data Cleaning----
 Before loading data, we use readxl package to load them
 ```{r}
-#install.packages('readxl')
-#install.packages('lubridate')
+install.packages('readxl')
+install.packages('lubridate')
 library(readxl)
 library(lubridate)
 library(dplyr)
@@ -24,7 +29,7 @@ At first, load data
 this r codes are encoded as 'utf-8'
 if errors on loading data, reopen this document with 'utf-8'
 ```{r}
-df <- read_excel('(NEW2)(Merged) Movie Data.xlsx')
+df <- read_excel('(NEW)(Merged) Movie Data.xlsx')
 head(df)
 ```
 
@@ -56,20 +61,29 @@ df_edit_col <- df %>% select(Name, Release_Date, Nationality,
                       Total_screens, Box_office, Audience,
                       Genre, Rate, Artistic)
 
-#View(df_edit_col)
+View(df_edit_col)
 ```
 
 Convert Release Date from numeric to as.Date
 ```{r}
-df_edit_col$Release_Date <- as.Date(myDf$Release_Date, origin='1900-01-01')
+df_edit_col$Release_Date <- as.Date(df$Release_Date, origin='1900-01-01')
 
-#df_edit_col$Release_Date
+df_edit_col$Release_Date
 
-#View(df_edit_col)
+View(df_edit_col)
 ```
 
 We skip rows with NAs
 ```{r}
-na.omit(df_edit_col)
+df_edit_col <- na.omit(df_edit_col)
+
+View(df_edit_col)
+```
+
+We also skip rows that the columns 'Total_screens', 'Box_office', 'Audience' both have the value 0.
+```{r}
+df_edit_col <- subset(df_edit_col, Total_screens != 0 | Box_office != 0 | Audience != 0)
+
+df_edit_col
 ```
 
