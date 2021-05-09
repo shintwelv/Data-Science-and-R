@@ -61,7 +61,7 @@ df_edit_col <- df %>% select(Name, Release_Date, Nationality,
 
 Convert Release Date from numeric to as.Date
 ```{r}
-df_edit_col$Release_Date <- as.Date(myDf$Release_Date, origin='1900-01-01')
+df_edit_col$Release_Date <- as.Date(df_edit_col$Release_Date, origin='1900-01-01')
 
 #df_edit_col$Release_Date
 
@@ -70,6 +70,35 @@ df_edit_col$Release_Date <- as.Date(myDf$Release_Date, origin='1900-01-01')
 
 We skip rows with NAs
 ```{r}
-na.omit(df_edit_col)
+df_skip_na <- na.omit(df_edit_col)
+```
+
+After, we identified rows with all 0s in Box Office, Audience, and # of screens.
+We concluded that these are missing values or movies didn't be shown to the audience.
+So, we skip these rows.
+```{r}
+df_skip_na_0s <- df_skip_na %>%
+  filter(Total_screens > 0 & Box_office > 0 &Audience > 0)
+```
+
+Now we have 16500 rows X 9 columns data.
+```{r}
+nrow(df_skip_na_0s); ncol(df_skip_na_0s)
+```
+
+--------------Analysis---------------
+1. Linear Regression
+for this part, we are going to identify relationship among Box Office and other factors.
+We set
+a)Independent Variable = Box Office
+b)Dependent Variable = # of screens, Nationality, Audience, Rate, Genre, Artistic.
+
+# of screen and Audience are already numeric values, so we don't need to modifying them.
+However, Nationality, Genre, Rate and Artistic is characters. So we need to separate those values into each column.
+```{r}
+table(df$Nationality)
+table(df$Genre)
+table(df$Rate)
+table(df$Artistic)
 ```
 
