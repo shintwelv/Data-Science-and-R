@@ -92,13 +92,122 @@ for this part, we are going to identify relationship among Box Office and other 
 We set
 a)Independent Variable = Box Office
 b)Dependent Variable = # of screens, Nationality, Audience, Rate, Genre, Artistic.
+```{r}
+df_regression <- df_skip_na_0s
+```
 
 # of screen and Audience are already numeric values, so we don't need to modifying them.
 However, Nationality, Genre, Rate and Artistic is characters. So we need to separate those values into each column.
+
+
+Before that, when we checked Rate column, it has values with same meaning but different expression. It was derived from modification of rate system for time change.
+We need to consolidate those expressions into one.
 ```{r}
-table(df$Nationality)
-table(df$Genre)
-table(df$Rate)
-table(df$Artistic)
+unique(df_regression)
 ```
+
+
+```{r}
+df_regression[df_regression["Rate"] == '12세이상관람가',"Rate"] = "Over 12"
+df_regression[df_regression["Rate"] == '국민학생관람불가',"Rate"] = "Over 12"
+df_regression[df_regression["Rate"] == '전체관람가',"Rate"] = "All"
+df_regression[df_regression["Rate"] == '15세관람가',"Rate"] = "Over 15"
+df_regression[df_regression["Rate"] == '15세이상관람가',"Rate"] = "Over 15"
+df_regression[df_regression["Rate"] == '중학생이상관람가',"Rate"] = "Over 15"
+df_regression[df_regression["Rate"] == '12세이상관람가,12세관람가',"Rate"] = "Over 12"
+df_regression[df_regression["Rate"] == '18세 미만인 자는 관람할 수 없는 등급',"Rate"] = "Over 18"
+df_regression[df_regression["Rate"] == '18세관람가,15세이상관람가',"Rate"] = "Over 18"
+df_regression[df_regression["Rate"] == '연소자관람불가',"Rate"] = "Over 18"
+df_regression[df_regression["Rate"] == '청소년관람불가',"Rate"] = "Over 18"
+df_regression[df_regression["Rate"] == '12세관람가',"Rate"] = "Over 12"
+df_regression[df_regression["Rate"] == '15세 미만인 자는 관람할 수 없는 등급',"Rate"] = "Over 15"
+df_regression[df_regression["Rate"] == '고등학생이상관람가',"Rate"] = "Over 16"
+df_regression[df_regression["Rate"] == '12세이상관람가,연소자관람가',"Rate"] = "Over 12"
+df_regression[df_regression["Rate"] == '15세관람가,15세이상관람가',"Rate"] = "Over 15"
+df_regression[df_regression["Rate"] == '18세관람가',"Rate"] = "Over 18"
+df_regression[df_regression["Rate"] == '미성년자관람불가',"Rate"] = "Over 18"
+df_regression[df_regression["Rate"] == '15세이상관람가,중학생이상관람가',"Rate"] = "Over 15"
+df_regression[df_regression["Rate"] == '연소자관람가',"Rate"] = "All"
+df_regression[df_regression["Rate"] == '고등학생이상관람가,15세이상관람가',"Rate"] = "Over 15"
+df_regression[df_regression["Rate"] == '연소자관람불가,청소년관람불가',"Rate"] = "Over 18"
+df_regression[df_regression["Rate"] == '연소자관람불가,15세이상관람가',"Rate"] = "Over 15"
+df_regression[df_regression["Rate"] == '18세관람가,청소년관람불가',"Rate"] = "Over 18"
+df_regression[df_regression["Rate"] == '미성년자관람가',"Rate"] = "Over 18"
+df_regression[df_regression["Rate"] == '모든 관람객이 관람할 수 있는 등급,전체관람가',"Rate"] = "All"
+df_regression[df_regression["Rate"] == '12세이상관람가,전체관람가',"Rate"] = "Over 12"
+df_regression[df_regression["Rate"] == '12세이상관람가,고등학생이상관람가',"Rate"] = "Over 16"
+df_regression[df_regression["Rate"] == '12세이상관람가,국민학생관람불가,15세이상관람가',"Rate"] = "Over 12"
+df_regression[df_regression["Rate"] == '연소자관람가,전체관람가',"Rate"] = "All"
+df_regression[df_regression["Rate"] == '청소년관람불가,15세이상관람가',"Rate"] = "Over 15"
+df_regression[df_regression["Rate"] == '모든 관람객이 관람할 수 있는 등급',"Rate"] = "All"
+df_regression[df_regression["Rate"] == '12세이상관람가,15세이상관람가',"Rate"] = "Over 12"
+df_regression[df_regression["Rate"] == '12세 미만인 자는 관람할 수 없는 등급',"Rate"] = "Over 12"
+df_regression[df_regression["Rate"] == '12세이상관람가,15세 미만인 자는 관람할 수 없는 등급',"Rate"] = "Over 15"
+df_regression[df_regression["Rate"] == '12세이상관람가,중학생이상관람가',"Rate"] = "Over 15"
+df_regression[df_regression["Rate"] == '15세이상관람가,미성년자관람불가',"Rate"] = "Over 18"
+df_regression[df_regression["Rate"] == '연소자관람가,15세이상관람가',"Rate"] = "Over 15"
+df_regression[df_regression["Rate"] == '청소년관람불가,12세관람가',"Rate"] = "Over 18"
+df_regression[df_regression["Rate"] == '15세 미만인 자는 관람할 수 없는 등급 ,15세이상관람가',"Rate"] = "Over 15"
+df_regression[df_regression["Rate"] == '15세이상관람가,전체관람가',"Rate"] = "Over 15"
+df_regression[df_regression["Rate"] == '15세이상관람가,18세 미만인 자는 관람할 수 없는 등급',"Rate"] = "Over 18"
+df_regression[df_regression["Rate"] == '국민학생관람불가,청소년관람불가',"Rate"] = "Over 18"
+df_regression[df_regression["Rate"] == '청소년관람불가,고등학생이상관람가',"Rate"] = "Over 18"
+df_regression[df_regression["Rate"] == '고등학생이상관람가,청소년관람불가',"Rate"] = "Over 18"
+df_regression[df_regression["Rate"] == '국민학생관람불가,15세이상관람가',"Rate"] = "Over 15"
+df_regression[df_regression["Rate"] == '15세관람가,12세이상관람가',"Rate"] = "Over 15"
+df_regression[df_regression["Rate"] == '기타',"Rate"] = "Others"
+df_regression[df_regression["Rate"] == '국민학생관람불가,중학생이상관람가',"Rate"] = "Over 15"
+df_regression[df_regression["Rate"] == '미정',"Rate"] = "Not decided"
+df_regression[df_regression["Rate"] == '청소년관람불가,전체관람가',"Rate"] = "Over 18"
+df_regression[df_regression["Rate"] == '전체관람가,중학생이상관람가',"Rate"] = "Over 15"
+df_regression[df_regression["Rate"] == '제한상영가',"Rate"] = "Restricted"
+```
+```{r}
+table(df_regression$Rate)
+```
+```{r}
+df_regression$Over_12 = df_regression$Rate == 'Over 12'
+df_regression$All = df_regression$Rate == 'All'
+df_regression$Over_15 = df_regression$Rate == 'Over 15'
+df_regression$Over_18 = df_regression$Rate == 'Over 18'
+```
+
+```{r}
+table(df_regression$Genre)
+```
+```{r}
+df_regression$SF = df_regression$Genre == 'SF'
+df_regression$Family = df_regression$Genre == '가족'
+df_regression$Play = df_regression$Genre == '공연'
+df_regression$Horror = df_regression$Genre == '공포(호러)'
+df_regression$Others = df_regression$Genre == '기타'
+df_regression$Documentary = df_regression$Genre == '다큐멘터리'
+df_regression$Drame = df_regression$Genre == '드라마'
+df_regression$Romans = df_regression$Genre == '멜로/로맨스'
+df_regression$Musical = df_regression$Genre == '뮤지컬'
+df_regression$Mystery = df_regression$Genre == '미스터리'
+df_regression$Crime = df_regression$Genre == '범죄'
+df_regression$Historic = df_regression$Genre == '사극'
+df_regression$Western = df_regression$Genre == '서부극(웨스턴)'
+df_regression$Erotic = df_regression$Genre == '성인물(에로)'
+df_regression$Thriller = df_regression$Genre == '스릴러'
+df_regression$Animation = df_regression$Genre == '애니메이션'
+df_regression$Action = df_regression$Genre == '액션'
+df_regression$Adventure = df_regression$Genre == '어드벤처'
+df_regression$War = df_regression$Genre == '전쟁'
+df_regression$Comedy = df_regression$Genre == '코미디'
+df_regression$Fantasy = df_regression$Genre == '판타지'
+```
+
+
+
+
+```{r}
+table(df_regression$Nationality)
+```
+```{r}
+
+```
+
+
 
