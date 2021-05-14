@@ -1,0 +1,163 @@
+---
+title: "Group Project"
+output: html_document
+---
+
+---
+title: "Team_7"
+output: html_document
+---
+---Description----
+This document describes processes of data analysis of movie.
+The data came from Kofic, which is Korean Film Council.
+The data is available on the urls below:
+- all movies listed in Kofic (https://www.kobis.or.kr/kobis/business/mast/mvie/searchMovieList.do)
+- Data related with sales rev etc.
+(https://www.kobis.or.kr/kobis/business/stat/offc/searchOfficHitTotList.do?searchMode=year)
+
+---Data Cleaning----
+Before loading data, we use readxl package to load them
+```{r}
+install.packages('readxl')
+install.packages('lubridate')
+library(readxl)
+library(lubridate)
+library(dplyr)
+library(ggplot2)
+```
+
+At first, load data
+this r codes are encoded as 'utf-8'
+if errors on loading data, reopen this document with 'utf-8'
+```{r}
+df <- read_excel('(NEW2)(Merged) Movie Data.xlsx')
+head(df)
+```
+
+Check data
+```{r}
+summary(df)
+```
+We saw unnecessary columns
+Change name of column to english for easier processing
+```{r}
+#colnames(df)
+
+colnames(df)[1] <- 'Name'
+colnames(df)[14] <- 'Release_Date'
+colnames(df)[17] <- 'Nationality'
+colnames(df)[18] <- 'Total_screens'
+colnames(df)[19] <- 'Box_office'
+colnames(df)[20] <- 'Audience'
+colnames(df)[23] <- 'Genre'
+colnames(df)[24] <- 'Rate'
+colnames(df)[25] <- 'Artistic'
+
+colnames(df)
+```
+
+we decided to drop: column number 2~13, 15, 16, 21, 22
+```{r}
+df_edit_col <- df %>% select(Name, Release_Date, Nationality, 
+                      Total_screens, Box_office, Audience,
+                      Genre, Rate, Artistic)
+
+View(df_edit_col)
+```
+
+Convert Release Date from numeric to as.Date
+```{r}
+df_edit_col$Release_Date <- as.Date(df$Release_Date, origin='1900-01-01')
+
+df_edit_col$Release_Date
+
+View(df_edit_col)
+```
+
+We skip rows with NAs
+```{r}
+df_edit_col <- na.omit(df_edit_col)
+
+View(df_edit_col)
+```
+
+We also skip rows that the columns 'Total_screens', 'Box_office', 'Audience' both have the value 0.
+```{r}
+df_edit_col <- subset(df_edit_col, Total_screens != 0 & Box_office != 0 & Audience != 0)
+
+View(df_edit_col)
+```
+
+It divided January to December into fourth quarter to find out monthly sales.
+```{r}
+ggmonth<-month(df_edit_col$Release_Date)
+
+ggyear1<-year(df_edit_col_gg1$Release_Date)
+ggyear2<-year(df_edit_col_gg2$Release_Date)
+ggyear3<-year(df_edit_col_gg3$Release_Date)
+ggyear4<-year(df_edit_col_gg4$Release_Date)
+
+month1<-month(df_edit_col_gg1$Release_Date)
+month2<-month(df_edit_col_gg2$Release_Date)
+month3<-month(df_edit_col_gg3$Release_Date)
+month4<-month(df_edit_col_gg4$Release_Date)
+
+BOX_total<-as.numeric(df_edit_col$Box_office)
+BOX_total1<-as.numeric(df_edit_col_gg1$Box_office)
+BOX_total2<-as.numeric(df_edit_col_gg2$Box_office)
+BOX_total3<-as.numeric(df_edit_col_gg3$Box_office)
+BOX_total4<-as.numeric(df_edit_col_gg4$Box_office)
+
+Month1<-as.character(month1)
+Month2<-as.character(month2)
+Month3<-as.character(month3)
+Month4<-as.character(month4)
+
+df_edit_col_gg1<-df_edit_col%>%
+  filter(ggmonth==1|ggmonth==2|ggmonth==3)
+
+df_edit_col_gg2<-df_edit_col%>%
+  filter(ggmonth==4|ggmonth==5|ggmonth==6)
+
+df_edit_col_gg3<-df_edit_col%>%
+  filter(ggmonth==7|ggmonth==8|ggmonth==9)
+
+df_edit_col_gg4<-df_edit_col%>%
+  filter(ggmonth==10|ggmonth==11|ggmonth==12)
+
+df_edit_col_ggp1<-cbind(df_edit_col_gg1,ggyear1,BOX_total1,Month1)
+df_edit_col_ggp2<-cbind(df_edit_col_gg2,ggyear2,BOX_total2,Month2)
+df_edit_col_ggp3<-cbind(df_edit_col_gg3,ggyear3,BOX_total3,Month3)
+df_edit_col_ggp4<-cbind(df_edit_col_gg4,ggyear4,BOX_total4,Month4)
+df_edit_col_N<-cbind(df_edit_col,BOX_total)
+```
+
+Monthly (Quarter 4) Revenue Graph for Each Year
+```{r}
+Q1<-ggplot(data=df_edit_col_ggp1,aes(ggyear1,y=BOX_total1,fill=Month1)) + geom_bar(stat="identity",position="dodge",color="black")+ggtitle('Box_office month1&2&3')
+Q2<-ggplot(data=df_edit_col_ggp2,aes(ggyear2,y=BOX_total2,fill=Month2)) + geom_bar(stat="identity",position="dodge",color="black")+ggtitle('Box_office month4&5&6')
+Q3<-ggplot(data=df_edit_col_ggp3,aes(ggyear3,y=BOX_total3,fill=Month3)) + geom_bar(stat="identity",position="dodge",color="black")+ggtitle('Box_office month7&8&9')
+Q4<-ggplot(data=df_edit_col_ggp4,aes(ggyear4,y=BOX_total4,fill=Month4)) + geom_bar(stat="identity",position="dodge",color="black")+ggtitle('Box_office month10&11&12')
+```
+
+Extract the top 100 sales figures
+```{r}
+df_edit_col_Order<-df_edit_col_N[c(order(-df_edit_col_N$BOX_total)),]
+NEW_df_Order<-df_edit_col_Order[1:100,]
+```
+
+Number of Top 100 Movies by Country Graph
+```{r}
+NEW_df_NATIONL<-ggplot(NEW_df_Order,aes(x=Nationality),fill=Nationality)+geom_bar()+ggtitle('Number of Top 100 Movies by Country')+geom_text(stat='count',aes(label=..count..),vjust=-0.5)
+NEW_df_NATIONL
+```
+
+Mean, median sales by genre graph
+```{r}
+adu<-aggregate(BOX_total~Genre,df_edit_col_N,mean)
+ggplot(adu,aes(x=Genre,y=BOX_total,fill=Genre))+ geom_bar(stat="identity",position="dodge") + theme(axis.text.x=element_text(angle=90, hjust=1)) + coord_flip()
+
+adu1<-aggregate(BOX_total~Genre,df_edit_col_N,median)
+ggplot(adu1,aes(x=Genre,y=BOX_total,fill=Genre))+ geom_bar(stat="identity",position="dodge") + theme(axis.text.x=element_text(angle=90, hjust=1)) + coord_flip()
+
+```
