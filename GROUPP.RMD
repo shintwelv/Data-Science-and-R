@@ -352,7 +352,7 @@ genres
 Draw a graph of national average box office by genre.
 At this point, the genre '0' of the histogram is a missing value. Therefore, the genre 'zero' representing '0' is removed and the analysis is carried out.
 ```{r}
-ggplot(subset(genres, mean_name != "zero" & mean_name != "etc"), aes(x=name, y=genre_mean, fill = genre_mean)) +
+ggplot(subset(genres, name != "zero" & name != "etc"), aes(x=name, y=genre_mean, fill = genre_mean)) +
   geom_bar(stat="identity", position="dodge") +
   coord_flip() +
   scale_y_continuous(trans = "log") +
@@ -367,7 +367,7 @@ ggsave("Genre mean graph.jpg")
 Draw a graph of national median box office by genre.
 Also at this point, the genre '0' of the histogram is a missing value. Therefore, the genre 'zero' representing '0' is removed and the analysis is carried out. We also remove 'etc', which represents other movie genres.
 ```{r}
-ggplot(subset(genres, median_name != "zero" & median_name != "etc"), aes(x=name, y=genre_median, fill = genre_median))+
+ggplot(subset(genres, name != "zero" & name != "etc"), aes(x=name, y=genre_median, fill = genre_median))+
   geom_bar(stat="identity", position="dodge") +
   coord_flip() +
   scale_y_continuous(trans = "log") +
