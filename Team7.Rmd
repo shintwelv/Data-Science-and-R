@@ -24,7 +24,7 @@ At first, load data
 this r codes are encoded as 'utf-8'
 if errors on loading data, reopen this document with 'utf-8'
 ```{r}
-df <- read_excel('Movie Data.xlsx')
+df <- read.csv('Movie Data.csv')
 head(df)
 ```
 
@@ -50,7 +50,7 @@ colnames(df)[25] <- 'Artistic'
 colnames(df)
 ```
 
-we decided to drop: column number 2~13, 15, 16, 21, 22
+we decided to drop columns other than Name, Release Date, Nationality, Total Screens, Box Office, Audience, Genre, Rate, Artistic
 ```{r}
 df_edit_col <- df %>% select(Name, Release_Date, Nationality, 
                       Total_screens, Box_office, Audience,
@@ -61,12 +61,20 @@ df_edit_col <- df %>% select(Name, Release_Date, Nationality,
 
 Convert Release Date from numeric to as.Date
 ```{r}
-df_edit_col$Release_Date <- as.Date(df_edit_col$Release_Date, origin='1900-01-01')
+df_edit_col$Release_Date <- ymd(df_edit_col$Release_Date)
 
-#df_edit_col$Release_Date
 
 #View(df_edit_col)
 ```
+Convert AUdience & Box Office & Total Screen into numerical value.
+```{r}
+df_edit_col$Audience <- as.numeric(df_edit_col$Audience)
+df_edit_col$Box_office <- as.numeric(df_edit_col$Box_office)
+df_edit_col$Total_screens <- as.numeric(df_edit_col$Total_screens)
+```
+
+
+
 
 We skip rows with NAs
 ```{r}
@@ -81,7 +89,7 @@ df_skip_na_0s <- df_skip_na %>%
   filter(Total_screens > 0 & Box_office > 0 &Audience > 0)
 ```
 
-Now we have 16500 rows X 9 columns data.
+Now we have 16506 rows X 9 columns data.
 ```{r}
 nrow(df_skip_na_0s); ncol(df_skip_na_0s)
 ```
@@ -239,10 +247,6 @@ df_regression$Not_artistic = df_regression$Artistic == 'Not_artistic'
 #View(df_regression)
 ```
 
-find out Box_office column is character value. so convert them into numeric
-```{r}
-df_regression$Box_office <- as.numeric(df_regression$Box_office)
-```
 
 
 To identify outliers
@@ -340,7 +344,7 @@ df_byMonth <- df_skip_na_0s
 Divide data by month.
 ```{r}
 df_byMonth$Month <- month(df_byMonth$Release_Date)
-df_byMonth$Box_office <- as.numeric(df_byMonth$Box_office)
+
 
 df_byMonth <- df_byMonth %>%
   group_by(Month) %>%
@@ -394,7 +398,7 @@ table(df_byGenre$Genre)
 ```
 ```{r}
 df_byGenre <- df_byGenre %>% filter(Genre != 0)
-df_byGenre$Box_office <- as.numeric(df_byGenre$Box_office)
+
 #table(df_byGenre$Genre)
 df_byGenre <- df_byGenre %>%
   group_by(Genre) %>%
@@ -443,48 +447,30 @@ ggplot(data= df_byGenre, aes(x=Genre, y=Mean,
 
 ```{r}
 df_Top100 <- df_skip_na_0s
-df_Top100$Rank = rank(df_Top100$Box_office)
-df_Top100[order(df_Top100$Box_office),]
+df_Top100 <- df_Top100 %>%
+  mutate(Rank = min_rank(Box_office))
 
+df_Top100 <- df_Top100[order(df_Top100$Rank, decreasing = TRUE),]
+
+df_Top100 <- df_Top100[seq(1,100),]
 ```
 
-
-
-Third, we extract the Top 100 movies with the highest box office and look at which country they are from.
-
-We're going to look at nationality share in each genre.
-
-Movie genre by country
-&
-Delete countries with fewer than five movies
 ```{r}
-NATION_G<-df_edit_col_N[,c('Genre','Nationality')]
-
-NATION_G1<-NATION_G%>%
-  filter(NATION_G$Nationality!='남아프리카공화국'&NATION_G$Nationality!='마케도니아'&NATION_G$Nationality!='모로코'&NATION_G$Nationality!='몰타'&NATION_G$Nationality!='몽고'&NATION_G$Nationality!='베네수엘라'&NATION_G$Nationality!='보스니아',NATION_G$Nationality!='부탄'&NATION_G$Nationality!='불가리아'&NATION_G$Nationality!='세르비아'&NATION_G$Nationality!='슬로바키아'&NATION_G$Nationality!='아랍에미리트연합국정부'&NATION_G$Nationality!='에스토니아'&NATION_G$Nationality!='우루과이'&NATION_G$Nationality!='우즈베키스탄'&NATION_G$Nationality!='이라크'&NATION_G$Nationality!='콜롬비아'&NATION_G$Nationality!='쿠바'&NATION_G$Nationality!='팔레스타인'&NATION_G$Nationality!='포르투갈'&NATION_G$Nationality!='필리핀')
-
-table(NATION_G1)
-ggplot(NATION_G1,aes(x=Genre,fill=Nationality))+geom_bar()+
-  xlab("Genre")+
-  ylab("Count")+
-  theme(axis.text.x=element_text(angle=90, hjust=1))+
-  coord_flip()
-
-ggsave("Genre nationality.jpg")
+Top100_ByNation <- df_Top100 %>%
+  group_by(Nationality) %>%
+  summarise(Count= n(), Mean_Box_Office = mean(Box_office), Median_Box_Office = median(Box_office))
 ```
 
-Extract the top 100 box office figures
 ```{r}
-df_edit_col_Order<-df_edit_col_N[c(order(-df_edit_col_N$BOX_total)),]
-NEW_df_Order<-df_edit_col_Order[1:100,]
-View(NEW_df_Order)
-```
+#Top100_ByNation
+ggplot(Top100_ByNation, 
+       aes(x=Nationality, y= Mean_Box_Office, 
+           label =round(Mean_Box_Office/1000000000,2)))+
+  geom_bar(stat='identity', fill = 'orchid2') +
+  labs(title = "Average Box Office of Top 100 Movies by Nationality",
+          subtitle="KRW Billion") +
+  scale_x_discrete(breaks=c('미국',"한국"), labels = c('USA',"Korea"))+
+  geom_text(size = 5, position = position_stack(vjust = 0.5)) +
+  scale_y_continuous(name=NULL, breaks=NULL)
 
-Number of Top 100 Movies by Country Graph
-```{r}
-ggplot(NEW_df_Order,aes(x=Nationality), fill=Nationality)+
-  geom_bar(fill="red", colour="black")+
-  ggtitle('Number of Top 100 Movies by Country')+
-  geom_text(stat='count',aes(label=..count..),vjust=-0.5)+
-  theme_classic()
 ```
