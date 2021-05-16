@@ -64,6 +64,7 @@ Convert Release Date from numeric to as.Date
 df_edit_col$Release_Date <- ymd(df_edit_col$Release_Date)
 
 
+
 #View(df_edit_col)
 ```
 Convert AUdience & Box Office & Total Screen into numerical value.
@@ -79,6 +80,7 @@ df_edit_col$Total_screens <- as.numeric(df_edit_col$Total_screens)
 We skip rows with NAs
 ```{r}
 df_skip_na <- na.omit(df_edit_col)
+
 ```
 
 After, we identified rows with all 0s in Box Office, Audience, and # of screens.
