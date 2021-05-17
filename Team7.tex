@@ -1,0 +1,989 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Team\_7},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Team\_7}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+---Description---- This document describes processes of data analysis of
+movie. The data came from Kofic, which is Korean Film Council. The data
+is available on the urls below: - all movies listed in Kofic
+(\url{https://www.kobis.or.kr/kobis/business/mast/mvie/searchMovieList.do})
+- Data related with sales rev etc.
+(\url{https://www.kobis.or.kr/kobis/business/stat/offc/searchOfficHitTotList.do?searchMode=year})
+
+---Data Cleaning---- Before loading data, we use readxl package to load
+them
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#install.packages(\textquotesingle{}readxl\textquotesingle{})}
+\CommentTok{\#install.packages(\textquotesingle{}lubridate\textquotesingle{})}
+\FunctionTok{library}\NormalTok{(readxl)}
+\FunctionTok{library}\NormalTok{(lubridate)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'lubridate'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     date, intersect, setdiff, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+At first, load data this r codes are encoded as `utf-8' if errors on
+loading data, reopen this document with `utf-8'
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{\textquotesingle{}Movie Data.csv\textquotesingle{}}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                                            영화명 영화명.영문. 제작연도
+## 1 5월 단단한영화展 <원헬스 단편전: 함께 살아가기>                  2021
+## 2                             몰래 야동 찍는 아내                  2019
+## 3                               물 많은 후배 아내                  2019
+## 4                                 성교육 주식회사                  2020
+## 5                                  내 동생의 여자                  2019
+## 6                                        미스피츠  The misfits     2021
+##   제작국가     유형                 장르 제작상태          감독 제작사 감독.1
+## 1     한국 옴니버스                 기타     기타                        #N/A
+## 2     일본     장편   멜로/로맨스,드라마 개봉예정   토미죠 타로          #N/A
+## 3     일본     장편   멜로/로맨스,드라마 개봉예정 버드맨 텟페이          #N/A
+## 4     일본     장편   멜로/로맨스,드라마 개봉예정 아마엔보 쇼군          #N/A
+## 5     일본     장편   멜로/로맨스,드라마 개봉예정 버드맨 텟페이          #N/A
+## 6     미국     장편 액션,어드벤처,스릴러 개봉예정     레니 할린          #N/A
+##   제작사.1 수입사 배급사 개봉일 영화유형 영화형태 국적 전국.스크린수
+## 1     #N/A   #N/A   #N/A   #N/A     #N/A     #N/A #N/A          #N/A
+## 2     #N/A   #N/A   #N/A   #N/A     #N/A     #N/A #N/A          #N/A
+## 3     #N/A   #N/A   #N/A   #N/A     #N/A     #N/A #N/A          #N/A
+## 4     #N/A   #N/A   #N/A   #N/A     #N/A     #N/A #N/A          #N/A
+## 5     #N/A   #N/A   #N/A   #N/A     #N/A     #N/A #N/A          #N/A
+## 6     #N/A   #N/A   #N/A   #N/A     #N/A     #N/A #N/A          #N/A
+##   전국.매출액 전국.관객수 서울.매출액 서울.관객수 장르.1 등급 영화구분
+## 1        #N/A        #N/A        #N/A        #N/A   #N/A #N/A     #N/A
+## 2        #N/A        #N/A        #N/A        #N/A   #N/A #N/A     #N/A
+## 3        #N/A        #N/A        #N/A        #N/A   #N/A #N/A     #N/A
+## 4        #N/A        #N/A        #N/A        #N/A   #N/A #N/A     #N/A
+## 5        #N/A        #N/A        #N/A        #N/A   #N/A #N/A     #N/A
+## 6        #N/A        #N/A        #N/A        #N/A   #N/A #N/A     #N/A
+\end{verbatim}
+
+Check data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     영화명          영화명.영문.          제작연도      제작국가        
+##  Length:82050       Length:82050       Min.   :1874   Length:82050      
+##  Class :character   Class :character   1st Qu.:1999   Class :character  
+##  Mode  :character   Mode  :character   Median :2011   Mode  :character  
+##                                        Mean   :2005                     
+##                                        3rd Qu.:2016                     
+##                                        Max.   :2022                     
+##                                        NA's   :3698                     
+##      유형               장르             제작상태             감독          
+##  Length:82050       Length:82050       Length:82050       Length:82050      
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##                                                                             
+##                                                                             
+##                                                                             
+##                                                                             
+##     제작사             감독.1            제작사.1            수입사         
+##  Length:82050       Length:82050       Length:82050       Length:82050      
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##                                                                             
+##                                                                             
+##                                                                             
+##                                                                             
+##     배급사             개봉일            영화유형           영화형태        
+##  Length:82050       Length:82050       Length:82050       Length:82050      
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##                                                                             
+##                                                                             
+##                                                                             
+##                                                                             
+##      국적           전국.스크린수      전국.매출액        전국.관객수       
+##  Length:82050       Length:82050       Length:82050       Length:82050      
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##                                                                             
+##                                                                             
+##                                                                             
+##                                                                             
+##  서울.매출액        서울.관객수           장르.1              등급          
+##  Length:82050       Length:82050       Length:82050       Length:82050      
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##                                                                             
+##                                                                             
+##                                                                             
+##                                                                             
+##    영화구분        
+##  Length:82050      
+##  Class :character  
+##  Mode  :character  
+##                    
+##                    
+##                    
+## 
+\end{verbatim}
+
+We saw unnecessary columns Change name of column to english for easier
+processing
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#colnames(df)}
+
+\FunctionTok{colnames}\NormalTok{(df)[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}Name\textquotesingle{}}
+\FunctionTok{colnames}\NormalTok{(df)[}\DecValTok{14}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}Release\_Date\textquotesingle{}}
+\FunctionTok{colnames}\NormalTok{(df)[}\DecValTok{17}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}Nationality\textquotesingle{}}
+\FunctionTok{colnames}\NormalTok{(df)[}\DecValTok{18}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}Total\_screens\textquotesingle{}}
+\FunctionTok{colnames}\NormalTok{(df)[}\DecValTok{19}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}Box\_office\textquotesingle{}}
+\FunctionTok{colnames}\NormalTok{(df)[}\DecValTok{20}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}Audience\textquotesingle{}}
+\FunctionTok{colnames}\NormalTok{(df)[}\DecValTok{23}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}Genre\textquotesingle{}}
+\FunctionTok{colnames}\NormalTok{(df)[}\DecValTok{24}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}Rate\textquotesingle{}}
+\FunctionTok{colnames}\NormalTok{(df)[}\DecValTok{25}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}Artistic\textquotesingle{}}
+
+\FunctionTok{colnames}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "Name"          "영화명.영문."  "제작연도"      "제작국가"     
+##  [5] "유형"          "장르"          "제작상태"      "감독"         
+##  [9] "제작사"        "감독.1"        "제작사.1"      "수입사"       
+## [13] "배급사"        "Release_Date"  "영화유형"      "영화형태"     
+## [17] "Nationality"   "Total_screens" "Box_office"    "Audience"     
+## [21] "서울.매출액"   "서울.관객수"   "Genre"         "Rate"         
+## [25] "Artistic"
+\end{verbatim}
+
+we decided to drop columns other than Name, Release Date, Nationality,
+Total Screens, Box Office, Audience, Genre, Rate, Artistic
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_edit\_col }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(Name, Release\_Date, Nationality, }
+\NormalTok{                      Total\_screens, Box\_office, Audience,}
+\NormalTok{                      Genre, Rate, Artistic)}
+
+\CommentTok{\#View(df\_edit\_col)}
+\end{Highlighting}
+\end{Shaded}
+
+Convert Release Date from numeric to as.Date
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_edit\_col}\SpecialCharTok{$}\NormalTok{Release\_Date }\OtherTok{\textless{}{-}} \FunctionTok{ymd}\NormalTok{(df\_edit\_col}\SpecialCharTok{$}\NormalTok{Release\_Date)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: 56676 failed to parse.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#View(df\_edit\_col)}
+\end{Highlighting}
+\end{Shaded}
+
+Convert AUdience \& Box Office \& Total Screen into numerical value.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_edit\_col}\SpecialCharTok{$}\NormalTok{Audience }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(df\_edit\_col}\SpecialCharTok{$}\NormalTok{Audience)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: 강제형변환에 의해 생성된 NA 입니다
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_edit\_col}\SpecialCharTok{$}\NormalTok{Box\_office }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(df\_edit\_col}\SpecialCharTok{$}\NormalTok{Box\_office)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: 강제형변환에 의해 생성된 NA 입니다
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_edit\_col}\SpecialCharTok{$}\NormalTok{Total\_screens }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(df\_edit\_col}\SpecialCharTok{$}\NormalTok{Total\_screens)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: 강제형변환에 의해 생성된 NA 입니다
+\end{verbatim}
+
+We skip rows with NAs
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_skip\_na }\OtherTok{\textless{}{-}} \FunctionTok{na.omit}\NormalTok{(df\_edit\_col)}
+\end{Highlighting}
+\end{Shaded}
+
+After, we identified rows with all 0s in Box Office, Audience, and \# of
+screens. We concluded that these are missing values or movies didn't be
+shown to the audience. So, we skip these rows.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_skip\_na\_0s }\OtherTok{\textless{}{-}}\NormalTok{ df\_skip\_na }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(Total\_screens }\SpecialCharTok{\textgreater{}} \DecValTok{0} \SpecialCharTok{\&}\NormalTok{ Box\_office }\SpecialCharTok{\textgreater{}} \DecValTok{0} \SpecialCharTok{\&}\NormalTok{Audience }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Now we have 16506 rows X 9 columns data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{nrow}\NormalTok{(df\_skip\_na\_0s); }\FunctionTok{ncol}\NormalTok{(df\_skip\_na\_0s)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 16506
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 9
+\end{verbatim}
+
+--------------Analysis--------------- 1. Linear Regression for this
+part, we are going to identify relationship among Box Office and other
+factors. We set a)Independent Variable = Box Office b)Dependent Variable
+= \# of screens, Nationality, Audience, Rate, Genre, Artistic.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_regression }\OtherTok{\textless{}{-}}\NormalTok{ df\_skip\_na\_0s}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{of-screen-and-audience-are-already-numeric-values-so-we-dont-need-to-modifying-them.}{%
+\section{of screen and Audience are already numeric values, so we don't
+need to modifying
+them.}\label{of-screen-and-audience-are-already-numeric-values-so-we-dont-need-to-modifying-them.}}
+
+However, Nationality, Genre, Rate and Artistic is characters. So we need
+to separate those values into each column.
+
+Before that, when we checked Rate column, it has values with same
+meaning but different expression. It was derived from modification of
+rate system for time change. We need to consolidate those expressions
+into one.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#unique(df\_regression)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}12세이상관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_12"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}국민학생관람불가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_12"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}전체관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"All"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}15세관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_15"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}15세이상관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_15"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}중학생이상관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_15"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}12세이상관람가,12세관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_12"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}18세 미만인 자는 관람할 수 없는 등급\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_18"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}18세관람가,15세이상관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_18"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}연소자관람불가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_18"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}청소년관람불가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_18"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}12세관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_12"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}15세 미만인 자는 관람할 수 없는 등급\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_15"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}고등학생이상관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_16"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}12세이상관람가,연소자관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_12"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}15세관람가,15세이상관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_15"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}18세관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_18"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}미성년자관람불가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_18"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}15세이상관람가,중학생이상관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_15"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}연소자관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"All"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}고등학생이상관람가,15세이상관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_15"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}연소자관람불가,청소년관람불가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_18"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}연소자관람불가,15세이상관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_15"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}18세관람가,청소년관람불가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_18"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}미성년자관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_18"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}모든 관람객이 관람할 수 있는 등급,전체관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"All"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}12세이상관람가,전체관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_12"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}12세이상관람가,고등학생이상관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_16"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}12세이상관람가,국민학생관람불가,15세이상관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_12"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}연소자관람가,전체관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"All"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}청소년관람불가,15세이상관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_15"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}모든 관람객이 관람할 수 있는 등급\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"All"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}12세이상관람가,15세이상관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_12"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}12세 미만인 자는 관람할 수 없는 등급\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_12"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}12세이상관람가,15세 미만인 자는 관람할 수 없는 등급\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_15"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}12세이상관람가,중학생이상관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_15"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}15세이상관람가,미성년자관람불가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_18"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}연소자관람가,15세이상관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_15"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}청소년관람불가,12세관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_18"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}15세 미만인 자는 관람할 수 없는 등급 ,15세이상관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_15"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}15세이상관람가,전체관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_15"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}15세이상관람가,18세 미만인 자는 관람할 수 없는 등급\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_18"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}국민학생관람불가,청소년관람불가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_18"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}청소년관람불가,고등학생이상관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_18"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}고등학생이상관람가,청소년관람불가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_18"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}국민학생관람불가,15세이상관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_15"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}15세관람가,12세이상관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_15"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}기타\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Others"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}국민학생관람불가,중학생이상관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_15"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}미정\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Not decided"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}청소년관람불가,전체관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_18"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}전체관람가,중학생이상관람가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Over\_15"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Rate"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}제한상영가\textquotesingle{}}\NormalTok{,}\StringTok{"Rate"}\NormalTok{] }\OtherTok{=} \StringTok{"Restricted"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#table(df\_regression$Rate)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Over\_12 }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Rate }\SpecialCharTok{==} \StringTok{\textquotesingle{}Over\_12\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{All }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Rate }\SpecialCharTok{==} \StringTok{\textquotesingle{}All\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Over\_16 }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Rate }\SpecialCharTok{==} \StringTok{\textquotesingle{}Over\_16\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Over\_15 }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Rate }\SpecialCharTok{==} \StringTok{\textquotesingle{}Over\_15\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Over\_18 }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Rate }\SpecialCharTok{==} \StringTok{\textquotesingle{}Over\_18\textquotesingle{}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#table(df\_regression$Genre)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{SF }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Genre }\SpecialCharTok{==} \StringTok{\textquotesingle{}SF\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Family }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Genre }\SpecialCharTok{==} \StringTok{\textquotesingle{}가족\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Play }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Genre }\SpecialCharTok{==} \StringTok{\textquotesingle{}공연\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Horror }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Genre }\SpecialCharTok{==} \StringTok{\textquotesingle{}공포(호러)\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Others }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Genre }\SpecialCharTok{==} \StringTok{\textquotesingle{}기타\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Documentary }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Genre }\SpecialCharTok{==} \StringTok{\textquotesingle{}다큐멘터리\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Drama }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Genre }\SpecialCharTok{==} \StringTok{\textquotesingle{}드라마\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Romans }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Genre }\SpecialCharTok{==} \StringTok{\textquotesingle{}멜로/로맨스\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Musical }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Genre }\SpecialCharTok{==} \StringTok{\textquotesingle{}뮤지컬\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Mystery }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Genre }\SpecialCharTok{==} \StringTok{\textquotesingle{}미스터리\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Crime }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Genre }\SpecialCharTok{==} \StringTok{\textquotesingle{}범죄\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Historic }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Genre }\SpecialCharTok{==} \StringTok{\textquotesingle{}사극\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Western }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Genre }\SpecialCharTok{==} \StringTok{\textquotesingle{}서부극(웨스턴)\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Erotic }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Genre }\SpecialCharTok{==} \StringTok{\textquotesingle{}성인물(에로)\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Thriller }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Genre }\SpecialCharTok{==} \StringTok{\textquotesingle{}스릴러\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Animation }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Genre }\SpecialCharTok{==} \StringTok{\textquotesingle{}애니메이션\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Action }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Genre }\SpecialCharTok{==} \StringTok{\textquotesingle{}액션\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Adventure }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Genre }\SpecialCharTok{==} \StringTok{\textquotesingle{}어드벤처\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{War }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Genre }\SpecialCharTok{==} \StringTok{\textquotesingle{}전쟁\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Comedy }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Genre }\SpecialCharTok{==} \StringTok{\textquotesingle{}코미디\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Fantasy }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Genre }\SpecialCharTok{==} \StringTok{\textquotesingle{}판타지\textquotesingle{}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#table(df\_regression$Nationality)}
+\end{Highlighting}
+\end{Shaded}
+
+Nationalities of USA, Japan, and Korea occupy most of the movies filmed
+in Korea. So, in this regression, we just focus on whether this movie is
+made in USA, Japan, or Korea.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Nationality"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}미국\textquotesingle{}}\NormalTok{,}\StringTok{"Nationality"}\NormalTok{] }\OtherTok{=} \StringTok{"USA"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Nationality"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}한국\textquotesingle{}}\NormalTok{,}\StringTok{"Nationality"}\NormalTok{] }\OtherTok{=} \StringTok{"Korea"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Nationality"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}일본\textquotesingle{}}\NormalTok{,}\StringTok{"Nationality"}\NormalTok{] }\OtherTok{=} \StringTok{"Japan"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{USA }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Nationality }\SpecialCharTok{==} \StringTok{\textquotesingle{}USA\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Japan }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Nationality }\SpecialCharTok{==} \StringTok{\textquotesingle{}Japan\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Korea }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Nationality }\SpecialCharTok{==} \StringTok{\textquotesingle{}Korea\textquotesingle{}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#df\_regression}
+\end{Highlighting}
+\end{Shaded}
+
+We make new columns for Column: Artistic. It has two values: Artistic or
+Normal.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#table(df\_regression$Artistic)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Artistic"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}독립/예술영화\textquotesingle{}}\NormalTok{,}\StringTok{"Artistic"}\NormalTok{] }\OtherTok{=} \StringTok{"Artistic"}
+\NormalTok{df\_regression[df\_regression[}\StringTok{"Artistic"}\NormalTok{] }\SpecialCharTok{==} \StringTok{\textquotesingle{}일반영화\textquotesingle{}}\NormalTok{,}\StringTok{"Artistic"}\NormalTok{] }\OtherTok{=} \StringTok{"Not\_artistic"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Artistic }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Artistic }\SpecialCharTok{==} \StringTok{\textquotesingle{}Artistic\textquotesingle{}}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Not\_artistic }\OtherTok{=}\NormalTok{ df\_regression}\SpecialCharTok{$}\NormalTok{Artistic }\SpecialCharTok{==} \StringTok{\textquotesingle{}Not\_artistic\textquotesingle{}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#View(df\_regression)}
+\end{Highlighting}
+\end{Shaded}
+
+To identify outliers
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  in Audience \& Box\_office
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  It seems that we don't have outstanding values.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{df\_regression,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Audience, }\AttributeTok{y=}\NormalTok{Box\_office)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{trans=}\StringTok{\textquotesingle{}log\textquotesingle{}}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{trans=}\StringTok{\textquotesingle{}log\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Team7_files/figure-latex/unnamed-chunk-27-1.pdf} 2. \#
+of screens \& Box\_office - values lower than 10 screens looks bizarre.
+- we are going to drop those values for regression.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{df\_regression,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Total\_screens, }\AttributeTok{y=}\NormalTok{Box\_office)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{trans=}\StringTok{\textquotesingle{}log10\textquotesingle{}}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{trans=}\StringTok{\textquotesingle{}log10\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Team7_files/figure-latex/unnamed-chunk-28-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_regression }\OtherTok{\textless{}{-}}\NormalTok{ df\_regression }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(Total\_screens }\SpecialCharTok{\textgreater{}} \DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Box\_office, Audience, Total\_screens are too large than other variables
+so that they can dominate the result. so, we scale them using log base
+10.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Box\_log10 }\OtherTok{\textless{}{-}} \FunctionTok{log}\NormalTok{(df\_regression}\SpecialCharTok{$}\NormalTok{Box\_office, }\DecValTok{10}\NormalTok{)}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{Aud\_log10 }\OtherTok{\textless{}{-}} \FunctionTok{log}\NormalTok{(df\_regression}\SpecialCharTok{$}\NormalTok{Audience, }\DecValTok{10}\NormalTok{)}
+\NormalTok{df\_regression}\SpecialCharTok{$}\NormalTok{screen\_log10 }\OtherTok{\textless{}{-}} \FunctionTok{log}\NormalTok{(df\_regression}\SpecialCharTok{$}\NormalTok{Total\_screens, }\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Now, it's time to build regression model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Movie\_reg }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Box\_log10 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Aud\_log10 }\SpecialCharTok{+}\NormalTok{ screen\_log10 }\SpecialCharTok{+}\NormalTok{All }\SpecialCharTok{+}\NormalTok{ Over\_12 }\SpecialCharTok{+}\NormalTok{ Over\_15 }\SpecialCharTok{+}\NormalTok{ Over\_16}\SpecialCharTok{+}\NormalTok{ Over\_18 }\SpecialCharTok{+}\NormalTok{ SF }\SpecialCharTok{+}\NormalTok{ Family }\SpecialCharTok{+}\NormalTok{ Play }\SpecialCharTok{+}\NormalTok{ Horror }\SpecialCharTok{+}\NormalTok{ Documentary }\SpecialCharTok{+}\NormalTok{ Drama }\SpecialCharTok{+}\NormalTok{ Romans }\SpecialCharTok{+}\NormalTok{ Musical }\SpecialCharTok{+}\NormalTok{ Mystery }\SpecialCharTok{+}\NormalTok{ Crime }\SpecialCharTok{+}\NormalTok{ Historic }\SpecialCharTok{+}\NormalTok{ Western }\SpecialCharTok{+}\NormalTok{ Erotic }\SpecialCharTok{+}\NormalTok{ Thriller }\SpecialCharTok{+}\NormalTok{ Animation }\SpecialCharTok{+}\NormalTok{ Action }\SpecialCharTok{+}\NormalTok{ Adventure }\SpecialCharTok{+}\NormalTok{ War }\SpecialCharTok{+}\NormalTok{ Comedy }\SpecialCharTok{+}\NormalTok{ Fantasy }\SpecialCharTok{+}\NormalTok{ USA }\SpecialCharTok{+}\NormalTok{ Japan }\SpecialCharTok{+}\NormalTok{ Korea }\SpecialCharTok{+}\NormalTok{ Artistic }\SpecialCharTok{+}\NormalTok{ Not\_artistic, }\AttributeTok{data=}\NormalTok{df\_regression)}
+
+\FunctionTok{summary}\NormalTok{(Movie\_reg)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Box_log10 ~ Aud_log10 + screen_log10 + All + Over_12 + 
+##     Over_15 + Over_16 + Over_18 + SF + Family + Play + Horror + 
+##     Documentary + Drama + Romans + Musical + Mystery + Crime + 
+##     Historic + Western + Erotic + Thriller + Animation + Action + 
+##     Adventure + War + Comedy + Fantasy + USA + Japan + Korea + 
+##     Artistic + Not_artistic, data = df_regression)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.98279 -0.02658  0.00339  0.03135  0.32232 
+## 
+## Coefficients: (3 not defined because of singularities)
+##                    Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)       3.7046750  0.0112772 328.510  < 2e-16 ***
+## Aud_log10         1.0046046  0.0013308 754.900  < 2e-16 ***
+## screen_log10      0.0552340  0.0028879  19.126  < 2e-16 ***
+## AllTRUE          -0.0010623  0.0033907  -0.313   0.7541    
+## Over_12TRUE       0.0113397  0.0026215   4.326 1.54e-05 ***
+## Over_15TRUE       0.0131062  0.0022616   5.795 7.12e-09 ***
+## Over_16TRUE              NA         NA      NA       NA    
+## Over_18TRUE              NA         NA      NA       NA    
+## SFTRUE           -0.0117580  0.0122587  -0.959   0.3375    
+## FamilyTRUE        0.0049498  0.0135048   0.367   0.7140    
+## PlayTRUE          0.4657530  0.0127566  36.511  < 2e-16 ***
+## HorrorTRUE        0.0125863  0.0117641   1.070   0.2847    
+## DocumentaryTRUE   0.0338244  0.0115807   2.921   0.0035 ** 
+## DramaTRUE         0.0070144  0.0110962   0.632   0.5273    
+## RomansTRUE       -0.0211353  0.0109970  -1.922   0.0547 .  
+## MusicalTRUE       0.1606214  0.0152295  10.547  < 2e-16 ***
+## MysteryTRUE       0.0223563  0.0120924   1.849   0.0645 .  
+## CrimeTRUE         0.0075114  0.0117486   0.639   0.5226    
+## HistoricTRUE     -0.0009518  0.0141275  -0.067   0.9463    
+## WesternTRUE      -0.0144215  0.0658267  -0.219   0.8266    
+## EroticTRUE       -0.1370592  0.0181199  -7.564 4.39e-14 ***
+## ThrillerTRUE     -0.0038779  0.0115651  -0.335   0.7374    
+## AnimationTRUE    -0.0113454  0.0114956  -0.987   0.3237    
+## ActionTRUE       -0.0053806  0.0113425  -0.474   0.6352    
+## AdventureTRUE     0.0005361  0.0132383   0.040   0.9677    
+## WarTRUE          -0.0145132  0.0159108  -0.912   0.3617    
+## ComedyTRUE        0.0030764  0.0113599   0.271   0.7865    
+## FantasyTRUE       0.0126364  0.0127912   0.988   0.3232    
+## USATRUE           0.0046302  0.0023523   1.968   0.0491 *  
+## JapanTRUE         0.0171462  0.0032913   5.210 1.95e-07 ***
+## KoreaTRUE        -0.0233825  0.0023181 -10.087  < 2e-16 ***
+## ArtisticTRUE      0.0458818  0.0020051  22.882  < 2e-16 ***
+## Not_artisticTRUE         NA         NA      NA       NA    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.06486 on 7233 degrees of freedom
+## Multiple R-squared:  0.9976, Adjusted R-squared:  0.9976 
+## F-statistic: 1.021e+05 on 29 and 7233 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+Significant \textless0.1\%\textgreater{} Audience\_log10 Screen\_log10
+AllTRUE Over\_12TRUE Over\_15TRUE PlayTRUE MusicalTRUE EroticTRUE
+JapanTRUE KoreaTRUE ArtisticTRUE \textless1\%\textgreater{}
+DocumentaryTRUE \textless5\%\textgreater{} MysteryTRUE USATRUE
+
+- A one-percent increase in Audience increases Box Office by 1.00\%. - A
+one-percent increase in number of screens increases Box Office by
+0.055\%. - putting rate of All decreases Box office by an average of
+0.1\% as compared to without any rate - putting rate of Over 12
+increases Box office by an average of 1.1\% as compared to without any
+rate - putting rate of Over 15 increases Box office by an average of
+1.3\% as compared to without any rate - putting genre of Play increases
+Box office by an average of 46.7\% as compared to without any genre -
+putting genre of Musical increases Box office by an average of 16.2\% as
+compared to without any genre - putting genre of Erotic decreases Box
+office by an average of 13.5\% as compared to without any genre -
+putting nationality of Japan increases Box office by an average of 1.7\%
+as compared to without any nationality - putting nationality of Korea
+decreases Box office by an average of 2.3\% as compared to without any
+nationality - putting Artistic increases Box office by an average of
+4.5\% as compared to without any Artistic or not
+
+\begin{itemize}
+\item
+  putting genre of Documentary increases Box office by an average of
+  3.5\% as compared to without any genre
+\item
+  putting genre of Mystery increases Box office by an average of 2.4\%
+  as compared to without any genre
+\item
+  putting nationality of USA increases Box office by an average of 0.4\%
+  as compared to without any nationality
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(lubridate)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_byMonth }\OtherTok{\textless{}{-}}\NormalTok{ df\_skip\_na\_0s}
+\end{Highlighting}
+\end{Shaded}
+
+Divide data by month.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_byMonth}\SpecialCharTok{$}\NormalTok{Month }\OtherTok{\textless{}{-}} \FunctionTok{month}\NormalTok{(df\_byMonth}\SpecialCharTok{$}\NormalTok{Release\_Date)}
+
+
+\NormalTok{df\_byMonth }\OtherTok{\textless{}{-}}\NormalTok{ df\_byMonth }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Month) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Count =} \FunctionTok{n}\NormalTok{(), }\AttributeTok{Mean\_Box\_Office =} \FunctionTok{mean}\NormalTok{(Box\_office), }\AttributeTok{Sum\_Box\_Office =} \FunctionTok{sum}\NormalTok{(Box\_office))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ df\_byMonth, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Month, }\AttributeTok{y=}\NormalTok{Mean\_Box\_Office, }
+      \AttributeTok{label =} \FunctionTok{round}\NormalTok{(Mean\_Box\_Office}\SpecialCharTok{/}\DecValTok{1000000000}\NormalTok{,}\DecValTok{2}\NormalTok{)))}\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{\textquotesingle{}identity\textquotesingle{}}\NormalTok{, }\AttributeTok{fill=}\StringTok{"darkslategray2"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_discrete}\NormalTok{(}\AttributeTok{name =} \ConstantTok{NULL}\NormalTok{, }\AttributeTok{limits=}\FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{12}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{5}\NormalTok{, }\AttributeTok{position =} \FunctionTok{position\_stack}\NormalTok{(}\AttributeTok{vjust =} \FloatTok{0.5}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_discrete}\NormalTok{(}\AttributeTok{name =} \ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Average Box Office by Month in KRW Billion"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Continuous limits supplied to discrete scale.
+## Did you mean `limits = factor(...)` or `scale_*_continuous()`?
+\end{verbatim}
+
+\includegraphics{Team7_files/figure-latex/unnamed-chunk-35-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ df\_byMonth, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Month, }\AttributeTok{y=}\NormalTok{Sum\_Box\_Office, }
+      \AttributeTok{label =} \FunctionTok{round}\NormalTok{(Sum\_Box\_Office}\SpecialCharTok{/}\DecValTok{1000000000000}\NormalTok{,}\DecValTok{2}\NormalTok{)))}\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{\textquotesingle{}identity\textquotesingle{}}\NormalTok{, }\AttributeTok{fill=}\StringTok{"orchid2"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_discrete}\NormalTok{(}\AttributeTok{name =} \ConstantTok{NULL}\NormalTok{, }\AttributeTok{limits=}\FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{12}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{5}\NormalTok{, }\AttributeTok{position =} \FunctionTok{position\_stack}\NormalTok{(}\AttributeTok{vjust =} \FloatTok{0.5}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_discrete}\NormalTok{(}\AttributeTok{name =} \ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.ticks =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Total Box Office by Month in KRW Trillion"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Continuous limits supplied to discrete scale.
+## Did you mean `limits = factor(...)` or `scale_*_continuous()`?
+\end{verbatim}
+
+\includegraphics{Team7_files/figure-latex/unnamed-chunk-36-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_byGenre }\OtherTok{\textless{}{-}}\NormalTok{ df\_skip\_na\_0s;}
+\NormalTok{df\_byGenre[df\_byGenre[}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{]}\SpecialCharTok{==}\StringTok{\textquotesingle{}가족\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Family"}
+\NormalTok{df\_byGenre[df\_byGenre[}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{]}\SpecialCharTok{==}\StringTok{\textquotesingle{}공연\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Play"}
+\NormalTok{df\_byGenre[df\_byGenre[}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{]}\SpecialCharTok{==}\StringTok{\textquotesingle{}공포(호러)\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Horror"}
+\NormalTok{df\_byGenre[df\_byGenre[}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{]}\SpecialCharTok{==}\StringTok{\textquotesingle{}기타\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Others"}
+\NormalTok{df\_byGenre[df\_byGenre[}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{]}\SpecialCharTok{==}\StringTok{\textquotesingle{}다큐멘터리\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Documentary"}
+\NormalTok{df\_byGenre[df\_byGenre[}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{]}\SpecialCharTok{==}\StringTok{\textquotesingle{}드라마\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Drama"}
+\NormalTok{df\_byGenre[df\_byGenre[}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{]}\SpecialCharTok{==}\StringTok{\textquotesingle{}멜로/로맨스\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Romans"}
+\NormalTok{df\_byGenre[df\_byGenre[}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{]}\SpecialCharTok{==}\StringTok{\textquotesingle{}뮤지컬\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Musical"}
+\NormalTok{df\_byGenre[df\_byGenre[}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{]}\SpecialCharTok{==}\StringTok{\textquotesingle{}미스터리\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Mystery"}
+\NormalTok{df\_byGenre[df\_byGenre[}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{]}\SpecialCharTok{==}\StringTok{\textquotesingle{}범죄\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Crime"}
+\NormalTok{df\_byGenre[df\_byGenre[}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{]}\SpecialCharTok{==}\StringTok{\textquotesingle{}사극\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Historic"}
+\NormalTok{df\_byGenre[df\_byGenre[}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{]}\SpecialCharTok{==}\StringTok{\textquotesingle{}서부극(웨스턴)\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Western"}
+\NormalTok{df\_byGenre[df\_byGenre[}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{]}\SpecialCharTok{==}\StringTok{\textquotesingle{}성인물(에로)\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Erotic"}
+\NormalTok{df\_byGenre[df\_byGenre[}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{]}\SpecialCharTok{==}\StringTok{\textquotesingle{}스릴러\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Thriller"}
+\NormalTok{df\_byGenre[df\_byGenre[}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{]}\SpecialCharTok{==}\StringTok{\textquotesingle{}애니메이션\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Animation"}
+\NormalTok{df\_byGenre[df\_byGenre[}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{]}\SpecialCharTok{==}\StringTok{\textquotesingle{}액션\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Action"}
+\NormalTok{df\_byGenre[df\_byGenre[}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{]}\SpecialCharTok{==}\StringTok{\textquotesingle{}어드벤처\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Adventure"}
+\NormalTok{df\_byGenre[df\_byGenre[}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{]}\SpecialCharTok{==}\StringTok{\textquotesingle{}전쟁\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"War"}
+\NormalTok{df\_byGenre[df\_byGenre[}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{]}\SpecialCharTok{==}\StringTok{\textquotesingle{}코미디\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Comedy"}
+\NormalTok{df\_byGenre[df\_byGenre[}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{]}\SpecialCharTok{==}\StringTok{\textquotesingle{}판타지\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Genre\textquotesingle{}}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Fantasy"}
+\FunctionTok{table}\NormalTok{(df\_byGenre}\SpecialCharTok{$}\NormalTok{Genre)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##           0      Action   Adventure   Animation      Comedy       Crime 
+##          73        1647         130         964         836         413 
+## Documentary       Drama      Erotic      Family     Fantasy    Historic 
+##         651        3416        1723         106         172          61 
+##      Horror     Musical     Mystery      Others        Play      Romans 
+##         757          47         262         109         292        3820 
+##          SF    Thriller         War     Western 
+##         309         610          99           9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_byGenre }\OtherTok{\textless{}{-}}\NormalTok{ df\_byGenre }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(Genre }\SpecialCharTok{!=} \DecValTok{0}\NormalTok{)}
+
+\CommentTok{\#table(df\_byGenre$Genre)}
+\NormalTok{df\_byGenre }\OtherTok{\textless{}{-}}\NormalTok{ df\_byGenre }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Genre) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Count =} \FunctionTok{n}\NormalTok{(), }\AttributeTok{Mean =} \FunctionTok{mean}\NormalTok{(Box\_office), }\AttributeTok{Sum =} \FunctionTok{sum}\NormalTok{(Box\_office))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ df\_byGenre, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Genre, }\AttributeTok{y=}\NormalTok{Mean, }
+      \AttributeTok{label =} \FunctionTok{round}\NormalTok{(Mean}\SpecialCharTok{/}\DecValTok{1000000000}\NormalTok{,}\DecValTok{2}\NormalTok{)))}\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{\textquotesingle{}identity\textquotesingle{}}\NormalTok{, }\AttributeTok{fill=}\StringTok{"orchid2"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_discrete}\NormalTok{(}\AttributeTok{name =} \ConstantTok{NULL}\NormalTok{, }
+                   \AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\StringTok{"Historic"}\NormalTok{, }\StringTok{"Adventure"}\NormalTok{, }\StringTok{"Crime"}\NormalTok{, }\StringTok{"Action"}\NormalTok{, }\StringTok{"Fantasy"}\NormalTok{, }\StringTok{"SF"}\NormalTok{, }\StringTok{"Thriller"}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{5}\NormalTok{, }\AttributeTok{position =} \FunctionTok{position\_stack}\NormalTok{(}\AttributeTok{vjust =} \FloatTok{0.5}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_discrete}\NormalTok{(}\AttributeTok{name =} \ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.ticks =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Average Box Office by Genre in KRW Billion Part1."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 14 rows containing missing values (position_stack).
+
+## Warning: Removed 14 rows containing missing values (position_stack).
+\end{verbatim}
+
+\includegraphics{Team7_files/figure-latex/unnamed-chunk-39-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ df\_byGenre, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Genre, }\AttributeTok{y=}\NormalTok{Mean, }
+      \AttributeTok{label =} \FunctionTok{round}\NormalTok{(Mean}\SpecialCharTok{/}\DecValTok{1000000000}\NormalTok{,}\DecValTok{2}\NormalTok{)))}\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{\textquotesingle{}identity\textquotesingle{}}\NormalTok{, }\AttributeTok{fill=}\StringTok{"orchid2"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_discrete}\NormalTok{(}\AttributeTok{name =} \ConstantTok{NULL}\NormalTok{, }
+                   \AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\StringTok{"Comedy"}\NormalTok{, }\StringTok{"Mystery"}\NormalTok{,}\StringTok{"Animation"}\NormalTok{, }\StringTok{"Drama"}\NormalTok{, }\StringTok{"Musical"}\NormalTok{, }\StringTok{"War"}\NormalTok{, }\StringTok{"Horror"}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{5}\NormalTok{, }\AttributeTok{position =} \FunctionTok{position\_stack}\NormalTok{(}\AttributeTok{vjust =} \FloatTok{0.5}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_discrete}\NormalTok{(}\AttributeTok{name =} \ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.ticks =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Average Box Office by Genre in KRW Billion Part2."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 14 rows containing missing values (position_stack).
+
+## Warning: Removed 14 rows containing missing values (position_stack).
+\end{verbatim}
+
+\includegraphics{Team7_files/figure-latex/unnamed-chunk-40-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{ df\_byGenre, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Genre, }\AttributeTok{y=}\NormalTok{Mean, }
+      \AttributeTok{label =} \FunctionTok{round}\NormalTok{(Mean}\SpecialCharTok{/}\DecValTok{1000000000}\NormalTok{,}\DecValTok{2}\NormalTok{)))}\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{\textquotesingle{}identity\textquotesingle{}}\NormalTok{, }\AttributeTok{fill=}\StringTok{"orchid2"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_discrete}\NormalTok{(}\AttributeTok{name =} \ConstantTok{NULL}\NormalTok{, }
+                   \AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\StringTok{"Family"}\NormalTok{, }\StringTok{"Romans"}\NormalTok{, }\StringTok{"Western"}\NormalTok{,}\StringTok{"Documentary"}\NormalTok{, }\StringTok{"Play"}\NormalTok{, }\StringTok{"Others"}\NormalTok{, }\StringTok{"Erotic"}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{5}\NormalTok{, }\AttributeTok{position =} \FunctionTok{position\_stack}\NormalTok{(}\AttributeTok{vjust =} \FloatTok{0.5}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_discrete}\NormalTok{(}\AttributeTok{name =} \ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.ticks =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Average Box Office by Genre in KRW Billion Part3."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 14 rows containing missing values (position_stack).
+
+## Warning: Removed 14 rows containing missing values (position_stack).
+\end{verbatim}
+
+\includegraphics{Team7_files/figure-latex/unnamed-chunk-41-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_Top100 }\OtherTok{\textless{}{-}}\NormalTok{ df\_skip\_na\_0s}
+\NormalTok{df\_Top100 }\OtherTok{\textless{}{-}}\NormalTok{ df\_Top100 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Rank =} \FunctionTok{min\_rank}\NormalTok{(Box\_office))}
+
+\NormalTok{df\_Top100 }\OtherTok{\textless{}{-}}\NormalTok{ df\_Top100[}\FunctionTok{order}\NormalTok{(df\_Top100}\SpecialCharTok{$}\NormalTok{Rank, }\AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{),]}
+
+\NormalTok{df\_Top100 }\OtherTok{\textless{}{-}}\NormalTok{ df\_Top100[}\FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{100}\NormalTok{),]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Top100\_ByNation }\OtherTok{\textless{}{-}}\NormalTok{ df\_Top100 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Nationality) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Count=} \FunctionTok{n}\NormalTok{(), }\AttributeTok{Mean\_Box\_Office =} \FunctionTok{mean}\NormalTok{(Box\_office), }\AttributeTok{Median\_Box\_Office =} \FunctionTok{median}\NormalTok{(Box\_office))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Top100\_ByNation}
+\FunctionTok{ggplot}\NormalTok{(Top100\_ByNation, }
+       \FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Nationality, }\AttributeTok{y=}\NormalTok{ Mean\_Box\_Office, }
+           \AttributeTok{label =}\FunctionTok{round}\NormalTok{(Mean\_Box\_Office}\SpecialCharTok{/}\DecValTok{1000000000}\NormalTok{,}\DecValTok{2}\NormalTok{)))}\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{\textquotesingle{}identity\textquotesingle{}}\NormalTok{, }\AttributeTok{fill =} \StringTok{\textquotesingle{}orchid2\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Average Box Office of Top 100 Movies by Nationality"}\NormalTok{,}
+          \AttributeTok{subtitle=}\StringTok{"KRW Billion"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_discrete}\NormalTok{(}\AttributeTok{breaks=}\FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}미국\textquotesingle{}}\NormalTok{,}\StringTok{"한국"}\NormalTok{), }\AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}USA\textquotesingle{}}\NormalTok{,}\StringTok{"Korea"}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{5}\NormalTok{, }\AttributeTok{position =} \FunctionTok{position\_stack}\NormalTok{(}\AttributeTok{vjust =} \FloatTok{0.5}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{name=}\ConstantTok{NULL}\NormalTok{, }\AttributeTok{breaks=}\ConstantTok{NULL}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Team7_files/figure-latex/unnamed-chunk-44-1.pdf}
+
+\end{document}

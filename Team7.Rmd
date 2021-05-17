@@ -1,17 +1,35 @@
 ---
 title: "Team_7"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
----Description----
-This document describes processes of data analysis of movie.
-The data came from Kofic, which is Korean Film Council.
-The data is available on the urls below:
-- all movies listed in Kofic (https://www.kobis.or.kr/kobis/business/mast/mvie/searchMovieList.do)
-- Data related with sales rev etc.
-(https://www.kobis.or.kr/kobis/business/stat/offc/searchOfficHitTotList.do?searchMode=year)
 
----Data Cleaning----
+# Description
+
+This document describes processes of data analysis of movie. The data
+came from Kofic, which is Korean Film Council.
+
+The data is available on the urls below:
+
+-   all movies listed in Kofic
+    (<https://www.kobis.or.kr/kobis/business/mast/mvie/searchMovieList.do>)
+
+-   Data related with sales rev etc.
+    (<https://www.kobis.or.kr/kobis/business/stat/offc/searchOfficHitTotList.do?searchMode=year>)
+
+# Purpose
+
+-   Identify impact of Covid-19 on Film Industry.
+-   Identify significant factors that have effects on Box office.
+
+# Data Cleaning
+
 Before loading data, we use readxl package to load them
+
 ```{r}
 #install.packages('readxl')
 #install.packages('lubridate')
@@ -20,20 +38,30 @@ library(lubridate)
 library(dplyr)
 ```
 
-At first, load data
-this r codes are encoded as 'utf-8'
-if errors on loading data, reopen this document with 'utf-8'
+At first, load data To deal with Korean characters, this r codes are
+encoded as 'utf-8'
+
+If errors on loading data, reopen this document with 'utf-8'
+
 ```{r}
 df <- read.csv('Movie Data.csv')
 head(df)
 ```
 
-Check data
+Check types of variables in the data
+
 ```{r}
 summary(df)
 ```
-We saw unnecessary columns
-Change name of column to english for easier processing
+
+Not all columns are used in this analysis.
+
+This Data have some duplicate columns.
+
+It is because of merging different data into a file.
+
+Change name of column to be used into English for easier processing.
+
 ```{r}
 #colnames(df)
 
@@ -50,72 +78,270 @@ colnames(df)[25] <- 'Artistic'
 colnames(df)
 ```
 
-we decided to drop columns other than Name, Release Date, Nationality, Total Screens, Box Office, Audience, Genre, Rate, Artistic
+Drop columns other than Name, Release Date, Nationality, Total Screens,
+Box Office, Audience, Genre, Rate, Artistic
+
 ```{r}
 df_edit_col <- df %>% select(Name, Release_Date, Nationality, 
                       Total_screens, Box_office, Audience,
                       Genre, Rate, Artistic)
 
-#View(df_edit_col)
+colnames(df_edit_col)
 ```
 
 Convert Release Date from numeric to as.Date
+
 ```{r}
 df_edit_col$Release_Date <- ymd(df_edit_col$Release_Date)
 
-
-
-#View(df_edit_col)
+class(df_edit_col$Release_Date)
 ```
+
+Audience, Box office, Total screen are currently character value.
+
 Convert AUdience & Box Office & Total Screen into numerical value.
+
 ```{r}
 df_edit_col$Audience <- as.numeric(df_edit_col$Audience)
 df_edit_col$Box_office <- as.numeric(df_edit_col$Box_office)
 df_edit_col$Total_screens <- as.numeric(df_edit_col$Total_screens)
 ```
 
+Skip rows with NAs'
 
-
-
-We skip rows with NAs
 ```{r}
 df_skip_na <- na.omit(df_edit_col)
 
 ```
 
-After, we identified rows with all 0s in Box Office, Audience, and # of screens.
-We concluded that these are missing values or movies didn't be shown to the audience.
+After, we identified rows with all 0s in Box Office, Audience, and \# of
+screens.
+
+We concluded that these are missing values or movies were listed on
+Kofic but didn't be shown to the audience.
+
 So, we skip these rows.
+
 ```{r}
 df_skip_na_0s <- df_skip_na %>%
   filter(Total_screens > 0 & Box_office > 0 &Audience > 0)
 ```
 
 Now we have 16506 rows X 9 columns data.
+
 ```{r}
 nrow(df_skip_na_0s); ncol(df_skip_na_0s)
 ```
 
---------------Analysis---------------
-1. Linear Regression
-for this part, we are going to identify relationship among Box Office and other factors.
-We set
-a)Independent Variable = Box Office
-b)Dependent Variable = # of screens, Nationality, Audience, Rate, Genre, Artistic.
+# Analysis
+
+```{r}
+library(lubridate)
+library(dplyr)
+```
+
+### Impact of Covid19 on Movie Industry.
+
+```{r}
+df_byMonth <- df_skip_na_0s
+```
+
+Divide data by month.
+
+```{r}
+df_byMonth$Month <- month(df_byMonth$Release_Date)
+
+
+df_byMonth <- df_byMonth %>%
+  group_by(Month) %>%
+  summarise(Count = n(), Mean_Box_Office = mean(Box_office), Sum_Box_Office = sum(Box_office))
+
+```
+
+```{r}
+ggplot(data= df_byMonth, aes(x=Month, y=Mean_Box_Office, 
+      label = round(Mean_Box_Office/1000000000,2)))+
+  geom_line() +
+  geom_point(colour='red')+
+  scale_x_discrete(name = NULL, limits=seq(1,12))+
+  geom_text(size = 5, position = position_stack(vjust = 0.7))+
+  scale_y_discrete(name = NULL) +
+  labs(title = "Average Box Office by Month",
+       subtitle = "KRW Billion")+
+  theme(axis.ticks = element_blank(),
+        axis.text.x = element_text(size = 15, colour='black'),
+        panel.background = element_rect(fill='white'),
+  panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                colour = "gray"))
+```
+
+```{r}
+df_byGenre <- df_skip_na_0s;
+df_byGenre[df_byGenre['Genre']=='가족','Genre'] <- "Family"
+df_byGenre[df_byGenre['Genre']=='공연','Genre'] <- "Play"
+df_byGenre[df_byGenre['Genre']=='공포(호러)','Genre'] <- "Horror"
+df_byGenre[df_byGenre['Genre']=='기타','Genre'] <- "Others"
+df_byGenre[df_byGenre['Genre']=='다큐멘터리','Genre'] <- "Documentary"
+df_byGenre[df_byGenre['Genre']=='드라마','Genre'] <- "Drama"
+df_byGenre[df_byGenre['Genre']=='멜로/로맨스','Genre'] <- "Romans"
+df_byGenre[df_byGenre['Genre']=='뮤지컬','Genre'] <- "Musical"
+df_byGenre[df_byGenre['Genre']=='미스터리','Genre'] <- "Mystery"
+df_byGenre[df_byGenre['Genre']=='범죄','Genre'] <- "Crime"
+df_byGenre[df_byGenre['Genre']=='사극','Genre'] <- "Historic"
+df_byGenre[df_byGenre['Genre']=='서부극(웨스턴)','Genre'] <- "Western"
+df_byGenre[df_byGenre['Genre']=='성인물(에로)','Genre'] <- "Erotic"
+df_byGenre[df_byGenre['Genre']=='스릴러','Genre'] <- "Thriller"
+df_byGenre[df_byGenre['Genre']=='애니메이션','Genre'] <- "Animation"
+df_byGenre[df_byGenre['Genre']=='액션','Genre'] <- "Action"
+df_byGenre[df_byGenre['Genre']=='어드벤처','Genre'] <- "Adventure"
+df_byGenre[df_byGenre['Genre']=='전쟁','Genre'] <- "War"
+df_byGenre[df_byGenre['Genre']=='코미디','Genre'] <- "Comedy"
+df_byGenre[df_byGenre['Genre']=='판타지','Genre'] <- "Fantasy"
+table(df_byGenre$Genre)
+```
+
+```{r}
+df_byGenre <- df_byGenre %>% filter(Genre != 0)
+
+#table(df_byGenre$Genre)
+df_byGenre <- df_byGenre %>%
+  group_by(Genre) %>%
+  summarise(Count = n(), Mean = mean(Box_office), Sum = sum(Box_office))
+```
+
+```{r}
+ggplot(data= df_byGenre, aes(x=Genre, y=Mean, 
+      label = round(Mean/1000000000,2)))+
+  geom_bar(stat='identity', fill="orchid2", colour='black') +
+  scale_x_discrete(name = NULL, 
+                   limits = c("Historic", "Adventure", "Crime", "Action", "Fantasy", "SF", "Thriller"))+
+  geom_text(size = 5, position = position_stack(vjust = 0.5))+
+  scale_y_discrete(name = NULL) +
+  theme(axis.ticks = element_blank()) +
+  labs(title = "Average Box Office by Genre Part1.",
+       subtitle="KRW Billion")+
+  theme(axis.text.x = element_text(size = 12, colour='black'),
+        panel.background = element_rect(fill='white'))
+```
+
+```{r}
+ggplot(data= df_byGenre, aes(x=Genre, y=Mean, 
+      label = round(Mean/1000000000,2)))+
+  geom_bar(stat='identity', fill="orchid2", colour='black') +
+  scale_x_discrete(name = NULL, 
+                   limits = c("Comedy", "Mystery","Animation", "Drama", "Musical", "War", "Horror"))+
+  geom_text(size = 5, position = position_stack(vjust = 0.5))+
+  scale_y_discrete(name = NULL) +
+  theme(axis.ticks = element_blank()) +
+  labs(title = "Average Box Office by Genre Part2.",
+       subtitle = "KRW Billion")+
+  theme(axis.text.x = element_text(size = 12, colour='black'),
+        panel.background = element_rect(fill='white'))
+```
+
+```{r}
+ggplot(data= df_byGenre, aes(x=Genre, y=Mean, 
+      label = round(Mean/1000000000,2)))+
+  geom_bar(stat='identity', fill="orchid2", colour='black') +
+  scale_x_discrete(name = NULL, 
+                   limits = c("Family", "Romans", "Western","Documentary", "Play", "Others", "Erotic"))+
+  geom_text(size = 5, position = position_stack(vjust = 0.5))+
+  scale_y_discrete(name = NULL) +
+  theme(axis.ticks = element_blank()) +
+  labs(title = "Average Box Office by Genre Part3.",
+       subtitle = "KRW Billion")+
+  theme(axis.text.x = element_text(size = 12, colour="black"),
+        panel.background = element_rect(fill='white'))
+```
+
+```{r}
+df_Top100 <- df_skip_na_0s
+df_Top100 <- df_Top100 %>%
+  mutate(Rank = min_rank(Box_office))
+
+df_Top100 <- df_Top100[order(df_Top100$Rank, decreasing = TRUE),]
+
+df_Top100 <- df_Top100[seq(1,100),]
+```
+
+```{r}
+Top100_ByNation <- df_Top100 %>%
+  group_by(Nationality) %>%
+  summarise(Count= n(), Mean_Box_Office = mean(Box_office), Median_Box_Office = median(Box_office))
+```
+
+```{r}
+Top100_ByNation[Top100_ByNation["Nationality"] == "미국","Nationality"] = "USA"
+Top100_ByNation[Top100_ByNation["Nationality"] == "한국","Nationality"] = "Korea"
+```
+
+```{r}
+ggplot(Top100_ByNation, 
+       aes(x="", y= Count, label = Count, fill = Nationality))+
+  geom_bar(stat='identity') + 
+  coord_polar("y", start = 0) + 
+  geom_text(size = 5, position = position_stack(vjust = 0.5))+
+  scale_y_discrete(name = NULL, breaks=NULL) +
+  scale_x_discrete(name=NULL, breaks=NULL) +
+  theme(panel.background = element_rect(fill="white"))+
+  labs(title = "Proportion of Top 100 Movies by Nationality")
+
+?theme
+```
+
+```{r}
+df_byYear <- df_skip_na_0s
+df_byYear$Year <- year(df_byYear$Release_Date)
+```
+
+```{r}
+df_byYear <- df_byYear %>%
+  group_by(Year) %>%
+  summarise(Count = n(), Mean_Box_Office = mean(Box_office), Total_Box_Office = sum(Box_office))
+
+df_byYear
+```
+
+```{r}
+ggplot(data = df_byYear,
+       aes(x=Year, y=Mean_Box_Office, label = round(Mean_Box_Office/1000000000,2))) +
+  geom_line(color = 'red') +
+  geom_point()+
+  labs(title="Average Box Office by Year in KRW Billion") +
+  geom_text(size = 4, position = position_stack(vjust = 0.7))+
+  theme(axis.text.x = element_text(size=13, angle=30, colour="black"),
+        panel.background = element_rect(fill='white'),
+  panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                colour = "gray"))+
+  scale_x_continuous(name=NULL, breaks=seq(2007,2021)) +
+  scale_y_continuous(name=NULL, breaks=NULL)
+```
+
+2\. Linear Regression
+
+For this part, we are going to identify relationship among Box Office
+and other factors.
+
+We set a)Independent Variable = Box Office b)Dependent Variable = \# of
+screens, Nationality, Audience, Rate, Genre, Artistic.
+
+To prevent influencing raw data, we make a new data frame.
+
 ```{r}
 df_regression <- df_skip_na_0s
 ```
 
-# of screen and Audience are already numeric values, so we don't need to modifying them.
-However, Nationality, Genre, Rate and Artistic is characters. So we need to separate those values into each column.
+When we checked Rate column, it has values with same meaning but
+different expression. It was derived from modification of rate system
+for time change. We need to consolidate those expressions into one.
 
+First, we need to check what kinds of ratings are in Rate column.
 
-Before that, when we checked Rate column, it has values with same meaning but different expression. It was derived from modification of rate system for time change.
-We need to consolidate those expressions into one.
 ```{r}
-#unique(df_regression)
+unique(df_regression$Rate)
 ```
 
+We combine Rate in to four levels All, Over 12, Over 15, Over 18.
 
 ```{r}
 df_regression[df_regression["Rate"] == '12세이상관람가',"Rate"] = "Over_12"
@@ -172,9 +398,14 @@ df_regression[df_regression["Rate"] == '청소년관람불가,전체관람가',"
 df_regression[df_regression["Rate"] == '전체관람가,중학생이상관람가',"Rate"] = "Over_15"
 df_regression[df_regression["Rate"] == '제한상영가',"Rate"] = "Restricted"
 ```
-```{r}
-#table(df_regression$Rate)
-```
+
+For processing linear regression for categorical variable, it is needed
+convert their values into separate columns.
+
+Categorical variables what we use for this linear regression are Rate,
+Genre, Nationality, Artistic. Make columns for each values in the
+columns.
+
 ```{r}
 df_regression$Over_12 = df_regression$Rate == 'Over_12'
 df_regression$All = df_regression$Rate == 'All'
@@ -184,8 +415,9 @@ df_regression$Over_18 = df_regression$Rate == 'Over_18'
 ```
 
 ```{r}
-#table(df_regression$Genre)
+unique(df_regression$Genre)
 ```
+
 ```{r}
 df_regression$SF = df_regression$Genre == 'SF'
 df_regression$Family = df_regression$Genre == '가족'
@@ -210,14 +442,16 @@ df_regression$Comedy = df_regression$Genre == '코미디'
 df_regression$Fantasy = df_regression$Genre == '판타지'
 ```
 
-
-
-
 ```{r}
-#table(df_regression$Nationality)
+table(df_regression$Nationality)
 ```
-Nationalities of USA, Japan, and Korea occupy most of the movies filmed in Korea.
-So, in this regression, we just focus on whether this movie is made in USA, Japan, or Korea.
+
+Nationalities of USA, Japan, and Korea occupy most of the movies filmed
+in Korea.
+
+So, in this linear regression, we just focus on whether this movie is
+made in USA, Japan, or Korea.
+
 ```{r}
 df_regression[df_regression["Nationality"] == '미국',"Nationality"] = "USA"
 df_regression[df_regression["Nationality"] == '한국',"Nationality"] = "Korea"
@@ -231,63 +465,69 @@ df_regression$Korea = df_regression$Nationality == 'Korea'
 ```
 
 ```{r}
-#df_regression
+unique(df_regression$Artistic)
 ```
-We make new columns for Column: Artistic. It has two values: Artistic or Normal.
-```{r}
-#table(df_regression$Artistic)
-```
+
+We make new columns for Column: Artistic. It has two values: Artistic or
+Not Artistic.
+
 ```{r}
 df_regression[df_regression["Artistic"] == '독립/예술영화',"Artistic"] = "Artistic"
 df_regression[df_regression["Artistic"] == '일반영화',"Artistic"] = "Not_artistic"
 ```
+
 ```{r}
 df_regression$Artistic = df_regression$Artistic == 'Artistic'
 df_regression$Not_artistic = df_regression$Artistic == 'Not_artistic'
 ```
-```{r}
-#View(df_regression)
-```
 
+Next, we are going to identify outliers for numerical variables.
 
-
-To identify outliers
 ```{r}
 library(ggplot2)
 ```
-1. in Audience & Box_office
-- It seems that we don't have outstanding values.
+
+1.  in Audience & Box_office
+
+-   It seems that we don't have outstanding values.
+
 ```{r}
 ggplot(data=df_regression,aes(x=Audience, y=Box_office)) +
   geom_point()+
   scale_x_continuous(trans='log')+
   scale_y_continuous(trans='log')
 ```
-2. # of screens & Box_office
-- values lower than 10 screens looks bizarre.
-- we are going to drop those values for regression.
+
+2.  Number of Screens & Box Office
+
+-   values lower than 10 screens looks bizarre.
+-   we are going to drop those values for regression.
+
 ```{r}
 ggplot(data=df_regression,aes(x=Total_screens, y=Box_office)) +
   geom_point()+
   scale_y_continuous(trans='log10')+
   scale_x_continuous(trans='log10')
 ```
+
 ```{r}
 df_regression <- df_regression %>%
   filter(Total_screens > 10)
 ```
 
-Box_office, Audience, Total_screens are too large than other variables so that they can dominate the result.
+Box_office, Audience, Total_screens are too large than other variables
+so that they can dominate the result.
+
 so, we scale them using log base 10.
+
 ```{r}
 df_regression$Box_log10 <- log(df_regression$Box_office, 10)
 df_regression$Aud_log10 <- log(df_regression$Audience, 10)
 df_regression$screen_log10 <- log(df_regression$Total_screens, 10)
 ```
 
-
-
 Now, it's time to build regression model.
+
 ```{r}
 Movie_reg <- lm(Box_log10 ~ Aud_log10 + screen_log10 +All + Over_12 + Over_15 + Over_16+ Over_18 + SF + Family + Play + Horror + Documentary + Drama + Romans + Musical + Mystery + Crime + Historic + Western + Erotic + Thriller + Animation + Action + Adventure + War + Comedy + Fantasy + USA + Japan + Korea + Artistic + Not_artistic, data=df_regression)
 
@@ -295,184 +535,102 @@ summary(Movie_reg)
 ```
 
 Significant
-<0.1%>
+
+\<0.1%\>
+
 Audience_log10
+
 Screen_log10
+
 AllTRUE
+
 Over_12TRUE
+
 Over_15TRUE
+
 PlayTRUE
+
 MusicalTRUE
+
 EroticTRUE
+
 JapanTRUE
+
 KoreaTRUE
+
 ArtisticTRUE
-<1%>
+
+\<1%\>
+
 DocumentaryTRUE
-<5%>
+
+\<5%\>
+
 MysteryTRUE
+
 USATRUE
 
 <Interpretation>
-- A one-percent increase in Audience increases Box Office by 1.00%.
-- A one-percent increase in number of screens increases Box Office by 0.055%.
-- putting rate of All decreases Box office by an average of 0.1% as compared to without any rate
-- putting rate of Over 12 increases Box office by an average of 1.1% as compared to without any rate
-- putting rate of Over 15 increases Box office by an average of 1.3% as compared to without any rate
-- putting genre of Play increases Box office by an average of 46.7% as compared to without any genre
-- putting genre of Musical increases Box office by an average of 16.2% as compared to without any genre
-- putting genre of Erotic decreases Box office by an average of 13.5% as compared to without any genre 
-- putting nationality of Japan increases Box office by an average of 1.7% as compared to without any nationality
-- putting nationality of Korea decreases Box office by an average of 2.3% as compared to without any nationality
-- putting Artistic increases Box office by an average of 4.5% as compared to without any Artistic or not
 
-- putting genre of Documentary increases Box office by an average of 3.5% as compared to without any genre
+-   A one-percent increase in Audience increases Box Office by 1.00%.
 
-- putting genre of Mystery increases Box office by an average of 2.4% as compared to without any genre
-- putting nationality of USA increases Box office by an average of 0.4% as compared to without any nationality
+<!-- -->
 
+-   A one-percent increase in number of screens increases Box Office by
+    0.055%.
 
+<!-- -->
 
------------------------------------------------
-```{r}
-library(lubridate)
-library(dplyr)
-```
+-   putting rate of All decreases Box office by an average of 0.1% as
+    compared to without any rate
 
+<!-- -->
 
-```{r}
-df_byMonth <- df_skip_na_0s
-```
-Divide data by month.
-```{r}
-df_byMonth$Month <- month(df_byMonth$Release_Date)
+-   putting rate of Over 12 increases Box office by an average of 1.1%
+    as compared to without any rate
 
+<!-- -->
 
-df_byMonth <- df_byMonth %>%
-  group_by(Month) %>%
-  summarise(Count = n(), Mean_Box_Office = mean(Box_office), Sum_Box_Office = sum(Box_office))
+-   putting rate of Over 15 increases Box office by an average of 1.3%
+    as compared to without any rate
 
-```
-```{r}
-ggplot(data= df_byMonth, aes(x=Month, y=Mean_Box_Office, 
-      label = round(Mean_Box_Office/1000000000,2)))+
-  geom_bar(stat='identity', fill="darkslategray2") +
-  scale_x_discrete(name = NULL, limits=seq(1,12))+
-  geom_text(size = 5, position = position_stack(vjust = 0.5))+
-  scale_y_discrete(name = NULL) +
-  theme_bw()+
-  ggtitle("Average Box Office by Month in KRW Billion")
-```
-```{r}
-ggplot(data= df_byMonth, aes(x=Month, y=Sum_Box_Office, 
-      label = round(Sum_Box_Office/1000000000000,2)))+
-  geom_bar(stat='identity', fill="orchid2") +
-  scale_x_discrete(name = NULL, limits=seq(1,12))+
-  geom_text(size = 5, position = position_stack(vjust = 0.5))+
-  scale_y_discrete(name = NULL) +
-  theme(axis.ticks = element_blank()) +
-  theme_bw()+
-  ggtitle("Total Box Office by Month in KRW Trillion")
-```
-```{r}
-df_byGenre <- df_skip_na_0s;
-df_byGenre[df_byGenre['Genre']=='가족','Genre'] <- "Family"
-df_byGenre[df_byGenre['Genre']=='공연','Genre'] <- "Play"
-df_byGenre[df_byGenre['Genre']=='공포(호러)','Genre'] <- "Horror"
-df_byGenre[df_byGenre['Genre']=='기타','Genre'] <- "Others"
-df_byGenre[df_byGenre['Genre']=='다큐멘터리','Genre'] <- "Documentary"
-df_byGenre[df_byGenre['Genre']=='드라마','Genre'] <- "Drama"
-df_byGenre[df_byGenre['Genre']=='멜로/로맨스','Genre'] <- "Romans"
-df_byGenre[df_byGenre['Genre']=='뮤지컬','Genre'] <- "Musical"
-df_byGenre[df_byGenre['Genre']=='미스터리','Genre'] <- "Mystery"
-df_byGenre[df_byGenre['Genre']=='범죄','Genre'] <- "Crime"
-df_byGenre[df_byGenre['Genre']=='사극','Genre'] <- "Historic"
-df_byGenre[df_byGenre['Genre']=='서부극(웨스턴)','Genre'] <- "Western"
-df_byGenre[df_byGenre['Genre']=='성인물(에로)','Genre'] <- "Erotic"
-df_byGenre[df_byGenre['Genre']=='스릴러','Genre'] <- "Thriller"
-df_byGenre[df_byGenre['Genre']=='애니메이션','Genre'] <- "Animation"
-df_byGenre[df_byGenre['Genre']=='액션','Genre'] <- "Action"
-df_byGenre[df_byGenre['Genre']=='어드벤처','Genre'] <- "Adventure"
-df_byGenre[df_byGenre['Genre']=='전쟁','Genre'] <- "War"
-df_byGenre[df_byGenre['Genre']=='코미디','Genre'] <- "Comedy"
-df_byGenre[df_byGenre['Genre']=='판타지','Genre'] <- "Fantasy"
-table(df_byGenre$Genre)
-```
-```{r}
-df_byGenre <- df_byGenre %>% filter(Genre != 0)
+<!-- -->
 
-#table(df_byGenre$Genre)
-df_byGenre <- df_byGenre %>%
-  group_by(Genre) %>%
-  summarise(Count = n(), Mean = mean(Box_office), Sum = sum(Box_office))
-```
+-   putting genre of Play increases Box office by an average of 46.7% as
+    compared to without any genre
 
+-   putting genre of Musical increases Box office by an average of 16.2%
+    as compared to without any genre
 
+<!-- -->
 
-```{r}
-ggplot(data= df_byGenre, aes(x=Genre, y=Mean, 
-      label = round(Mean/1000000000,2)))+
-  geom_bar(stat='identity', fill="orchid2") +
-  scale_x_discrete(name = NULL, 
-                   limits = c("Historic", "Adventure", "Crime", "Action", "Fantasy", "SF", "Thriller"))+
-  geom_text(size = 5, position = position_stack(vjust = 0.5))+
-  scale_y_discrete(name = NULL) +
-  theme(axis.ticks = element_blank()) +
-  theme_bw()+
-  ggtitle("Average Box Office by Genre in KRW Billion Part1.")
-```
+-   putting genre of Erotic decreases Box office by an average of 13.5%
+    as compared to without any genre
 
-```{r}
-ggplot(data= df_byGenre, aes(x=Genre, y=Mean, 
-      label = round(Mean/1000000000,2)))+
-  geom_bar(stat='identity', fill="orchid2") +
-  scale_x_discrete(name = NULL, 
-                   limits = c("Comedy", "Mystery","Animation", "Drama", "Musical", "War", "Horror"))+
-  geom_text(size = 5, position = position_stack(vjust = 0.5))+
-  scale_y_discrete(name = NULL) +
-  theme(axis.ticks = element_blank()) +
-  theme_bw()+
-  ggtitle("Average Box Office by Genre in KRW Billion Part2.")
-```
-```{r}
-ggplot(data= df_byGenre, aes(x=Genre, y=Mean, 
-      label = round(Mean/1000000000,2)))+
-  geom_bar(stat='identity', fill="orchid2") +
-  scale_x_discrete(name = NULL, 
-                   limits = c("Family", "Romans", "Western","Documentary", "Play", "Others", "Erotic"))+
-  geom_text(size = 5, position = position_stack(vjust = 0.5))+
-  scale_y_discrete(name = NULL) +
-  theme(axis.ticks = element_blank()) +
-  theme_bw()+
-  ggtitle("Average Box Office by Genre in KRW Billion Part3.")
-```
+<!-- -->
 
-```{r}
-df_Top100 <- df_skip_na_0s
-df_Top100 <- df_Top100 %>%
-  mutate(Rank = min_rank(Box_office))
+-   putting nationality of Japan increases Box office by an average of
+    1.7% as compared to without any nationality
 
-df_Top100 <- df_Top100[order(df_Top100$Rank, decreasing = TRUE),]
+<!-- -->
 
-df_Top100 <- df_Top100[seq(1,100),]
-```
+-   putting nationality of Korea decreases Box office by an average of
+    2.3% as compared to without any nationality
 
-```{r}
-Top100_ByNation <- df_Top100 %>%
-  group_by(Nationality) %>%
-  summarise(Count= n(), Mean_Box_Office = mean(Box_office), Median_Box_Office = median(Box_office))
-```
+<!-- -->
 
-```{r}
-#Top100_ByNation
-ggplot(Top100_ByNation, 
-       aes(x=Nationality, y= Mean_Box_Office, 
-           label =round(Mean_Box_Office/1000000000,2)))+
-  geom_bar(stat='identity', fill = 'orchid2') +
-  labs(title = "Average Box Office of Top 100 Movies by Nationality",
-          subtitle="KRW Billion") +
-  scale_x_discrete(breaks=c('미국',"한국"), labels = c('USA',"Korea"))+
-  geom_text(size = 5, position = position_stack(vjust = 0.5)) +
-  scale_y_continuous(name=NULL, breaks=NULL)
+-   putting Artistic increases Box office by an average of 4.5% as
+    compared to without any Artistic or not
 
-```
+<!-- -->
+
+-   putting genre of Documentary increases Box office by an average of
+    3.5% as compared to without any genre
+
+<!-- -->
+
+-   putting genre of Mystery increases Box office by an average of 2.4%
+    as compared to without any genre
+
+-   putting nationality of USA increases Box office by an average of
+    0.4% as compared to without any nationality
