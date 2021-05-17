@@ -100,7 +100,7 @@ class(df_edit_col$Release_Date)
 
 Audience, Box office, Total screen are currently character value.
 
-Convert AUdience & Box Office & Total Screen into numerical value.
+Convert Audience & Box Office & Total Screen into numerical value.
 
 ```{r}
 df_edit_col$Audience <- as.numeric(df_edit_col$Audience)
@@ -167,14 +167,15 @@ can enjoy movies in their house through smart TVs and other devices. In
 another way, it can be interpreted as Film Industry failed to compete
 with competitors. Competitors are all industries related with
 entertainment. Time is limited to all people so they cannot spend their
-time to all entertaining industries. In the decrease phase, Covid 19
-crashed Revenue of Film Industry. In 2020, when Covid 19 got strongest
-power on the earth, Average Box Office per Movie decreased by about 80%.
-It is the case that have never happened before. Without preparation,
-Film Industry struggled in the Covid effect. 2021 also doesn't look
-good. It has already passed half of May but the Revenue is only half of
-the previous year. Film companies not ready to get survived will meet
-the perish of themselves.
+time to all entertaining industries.
+
+In the decrease phase, Covid 19 crashed Revenue of Film Industry. In
+2020, when Covid 19 got strongest power on the earth, Average Box Office
+per Movie decreased by about 80%. It is the case that have never
+happened before. Without preparation, Film Industry struggled in the
+Covid effect. 2021 also doesn't look good. It has already passed half of
+May but the Revenue is only half of the previous year. Film companies
+not ready to get survived will meet the perish of themselves.
 
 ```{r}
 ggplot(data = df_byYear,
@@ -347,7 +348,7 @@ from modification of rating system for decades. To make chart, we need
 to convert them into a consolidated level. We translated them into
 seven:
 
--    All
+-   All
 
 -   Over 12
 
