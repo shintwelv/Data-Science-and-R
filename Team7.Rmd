@@ -330,7 +330,7 @@ may do.
 ```{r}
 ggplot(data= df_byNation, aes(x=Nationality, y=Mean_Box_Office, 
       label = round(Mean_Box_Office/1000000000,2)))+
-  geom_bar(stat='identity', fill="orchid2", colour='black') +
+  geom_bar(stat='identity', fill="deepskyblue3", colour='black') +
   scale_x_discrete(name = NULL, breaks = c("한국","미국","일본"), labels = c("Korea","USA","Japan"),limits=c("한국","미국","일본"))+
   geom_text(size = 5, position = position_stack(vjust = 0.8))+
   scale_y_discrete(name = NULL) +
@@ -444,7 +444,7 @@ df_byRate <- df_byRate %>%
 ```{r}
 ggplot(data= df_byRate, aes(x=Rate, y=Mean_Box_Office, 
       label = round(Mean_Box_Office/1000000000,2)))+
-  geom_bar(stat='identity', fill="orchid2", colour='black') +
+  geom_bar(stat='identity', fill="slategray2", colour='black') +
   scale_x_discrete(name = NULL)+
   geom_text(size = 5, position = position_stack(vjust = 0.8))+
   scale_y_discrete(name = NULL) +
@@ -489,7 +489,7 @@ great success.
 ```{r}
 ggplot(data= df_byArtistic, aes(x=Artistic, y=Mean_Box_Office, 
       label = round(Mean_Box_Office/1000000000,2)))+
-  geom_bar(stat='identity', fill="orchid2", colour='black') +
+  geom_bar(stat='identity', fill="palegreen2", colour='black') +
   scale_x_discrete(name = NULL)+
   geom_text(size = 5, position = position_stack(vjust = 0.8))+
   scale_y_discrete(name = NULL) +
@@ -745,8 +745,6 @@ summary(Movie_reg)
 
 -   Screen_log10
 
--   AllTRUE
-
 -   Over_12TRUE
 
 -   Over_15TRUE
@@ -769,8 +767,6 @@ summary(Movie_reg)
 
 \<5% level\>
 
--   MysteryTRUE
-
 -   USATRUE
 
 #### Interpretation
@@ -778,8 +774,6 @@ summary(Movie_reg)
 -   A one-percent increase in Audience increases Box Office by 1.00%.
 -   A one-percent increase in number of screens increases Box Office by
     0.055%.
--   putting rate of All decreases Box office by an average of 0.1% as
-    compared to without any rate
 -   putting rate of Over 12 increases Box office by an average of 1.1%
     as compared to without any rate
 -   putting rate of Over 15 increases Box office by an average of 1.3%
@@ -798,7 +792,5 @@ summary(Movie_reg)
     compared to without any Artistic or not
 -   putting genre of Documentary increases Box office by an average of
     3.5% as compared to without any genre
--   putting genre of Mystery increases Box office by an average of 2.4%
-    as compared to without any genre
 -   putting nationality of USA increases Box office by an average of
     0.4% as compared to without any nationality
