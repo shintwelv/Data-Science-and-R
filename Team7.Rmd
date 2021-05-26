@@ -65,7 +65,7 @@ Not all columns are used in this analysis.
 This Data have some duplicate columns.
 
 It is because of that two files (the general information and the sales
-information) have some same columns such as directors.
+information) have some same columns such as 감독(directors).
 
 For columns we use for this analysis, change name of columns into
 English for easier processing.
@@ -100,7 +100,8 @@ colnames(df_edit_col)
 The column 'Release Date' is recorded as integer value, which is days
 after 1900/01/01.
 
-Convert Release Date from numeric to visible format by using as.Date.
+Convert Release Date from numeric to visible format by using ymd
+functions in lubridate.
 
 ```{r}
 df_edit_col$Release_Date <- ymd(df_edit_col$Release_Date)
@@ -128,8 +129,10 @@ df_skip_na <- na.omit(df_edit_col)
 After, we identified rows with all 0s in Box Office, Audience, and \# of
 screens.
 
-We concluded that these are missing values or movies were listed on
-Kofic (Korean Film Council) but didn't be shown to the audience.
+We concluded that two cases are possible:
+
+1.  they are missing values
+2.  they are listed on Kofic system but not be shown to the public.
 
 So, we skip these rows.
 
@@ -154,9 +157,9 @@ library(dplyr)
 ### Time Series Analysis: Impact of Covid19 on Movie Industry
 
 Covid 19 prevents people from gathering in a place. Lots of industries
-have gotten damages. Film Industry is one of the damaged. In this part,
-we are going to identify how much film industry is shrinked by looking
-at Box Office by Year.
+have gotten damages. Film Industry is also one of the victims. In this
+part, we are going to identify how much film industry is shrinked by
+looking at Box Office by Year.
 
 At first, we need to extract year information from each movie.
 
@@ -217,7 +220,7 @@ For this part, we are going to identify relationship among Box Office
 and other factors.
 
 Before using linear regression, we are going to anticipate what factors
-are significant for Box Office.
+are significant for successful Box Office.
 
 ### Genre
 
@@ -265,12 +268,12 @@ df_byGenre <- df_byGenre %>%
 ```
 
 The result is quite different from our expectation. Historic has highest
-Average Box Office among genres. Action and Sf is ranked at 4th and 6th
+Average Box Office among genres. Action and SF are ranked at 4th and 6th
 position.
 
 The reason why Historic genre is powerful may that Historic genre has
 wider range of audience than other genres. Not only 20-30s but also
-50-60s are willing to watch these genres. 'Roaring Currents' has 17
+50-60s are willing to watch this genre. 'Roaring Currents' has 17
 million audiences, which is highest record in Korea. It is not possible
 to attracting only 20-30s.
 
@@ -328,7 +331,7 @@ df_byNation <- df_byNation %>%
   summarise(Count = n(), Proportion = n()/nrow(df_byNation)*100,Mean_Box_Office = mean(Box_office), Sum = sum(Box_office))
 ```
 
-looking at the data ordered by count, Korea, Japan and USA occupies
+Looking at the data ordered by count, Korea, Japan and USA occupies
 almost 80%. Therefore, we only focus on those three countries.
 
 ```{r}
@@ -343,8 +346,7 @@ for attracting lots of people. On other hands, movies from USA recorded
 higher average Box Office than from Korea. It can be a reason that most
 of movies from USA are movies that recorded great success in the world
 so distributors import them. In contrast, movies made in Korea are shown
-themselves in Korea first. Some of them may not record success and some
-may do.
+themselves in Korea first. Some of them may not be successful.
 
 ```{r}
 ggplot(data= df_byNation, aes(x=Nationality, y=Mean_Box_Office, 
@@ -363,9 +365,9 @@ ggplot(data= df_byNation, aes(x=Nationality, y=Mean_Box_Office,
 ### Rate
 
 Rate has lots of levels but most of them are same meaning. It is derived
-from modification of rating system for decades. To make chart, we need
-to convert them into a consolidated level. We translated them into
-seven:
+from modification of rating system for decades. To make visible chart,
+we need to convert them into a consolidated level. We translated them
+into seven:
 
 -   All
 
@@ -448,9 +450,9 @@ table(df_byRate$Rate)
 Movies rated as over 18 occupies half of the data but recorded lowest
 average Box Office. It can be a reason that most of Japan movies are
 made for sexual arousal so it occupies lots of proportion but record low
-average Box Office. The highest average Box office is on Over 12
-group.It may be because Over 12 can attract elementary school students
-and their parents than Over 15 cannot do.
+average Box Office. The highest average Box office is on Over 12 group.
+It may be because Over 12 can attract elementary school students and
+their parents than Over 15 cannot do.
 
 ```{r}
 df_byRate <- df_byRate %>%
@@ -532,9 +534,9 @@ We set
 
     -   Number of screens
 
-    -   Nationality
-
     -   Audience
+
+    -   Nationality
 
     -   Rate
 
@@ -626,6 +628,9 @@ Categorical variables what we use for this linear regression are Rate,
 Genre, Nationality, Artistic. Make columns for each values in the
 columns.
 
+If the column has value of 1, it means that this movie has element of
+the column and 0 not.
+
 ```{r}
 df_regression$Over_12 = df_regression$Rate == 'Over_12'
 df_regression$All = df_regression$Rate == 'All'
@@ -633,6 +638,8 @@ df_regression$Over_16 = df_regression$Rate == 'Over_16'
 df_regression$Over_15 = df_regression$Rate == 'Over_15'
 df_regression$Over_18 = df_regression$Rate == 'Over_18'
 ```
+
+As in genre bar plot, translate genre into English.
 
 ```{r}
 unique(df_regression$Genre)
@@ -708,7 +715,7 @@ Next, we are going to identify outliers for numerical variables.
 library(ggplot2)
 ```
 
-1.  in Audience & Box_office
+1.  Audience
 
     It seems that we don't have outstanding values.
 
@@ -719,7 +726,7 @@ ggplot(data=df_regression,aes(x=Audience, y=Box_office)) +
   scale_y_continuous(trans='log')
 ```
 
-2.  Number of Screens & Box Office
+2.  Number of Screens
 
     values lower than 10 screens looks bizarre.
 
@@ -756,7 +763,10 @@ Movie_reg <- lm(Box_log10 ~ Aud_log10 + screen_log10 +All + Over_12 + Over_15 + 
 summary(Movie_reg)
 ```
 
-#### Significant
+The regression has really small p-value so we can say that this result
+is statistically significant.
+
+#### Significant independent variable
 
 \<0.1% level\>
 
@@ -790,26 +800,76 @@ summary(Movie_reg)
 
 #### Interpretation
 
--   A one-percent increase in Audience increases Box Office by 1.00%.
--   A one-percent increase in number of screens increases Box Office by
-    0.055%.
--   putting rate of Over 12 increases Box office by an average of 1.1%
-    as compared to without any rate
--   putting rate of Over 15 increases Box office by an average of 1.3%
-    as compared to without any rate
--   putting genre of Play increases Box office by an average of 46.7% as
-    compared to without any genre
--   putting genre of Musical increases Box office by an average of 16.2%
-    as compared to without any genre
--   putting genre of Erotic decreases Box office by an average of 13.5%
-    as compared to without any genre
--   putting nationality of Japan increases Box office by an average of
-    1.7% as compared to without any nationality
--   putting nationality of Korea decreases Box office by an average of
-    2.3% as compared to without any nationality
--   putting Artistic increases Box office by an average of 4.5% as
+-   A one-percent increase in Audience **increases** Box Office by
+    1.00%.
+-   A one-percent increase in number of screens **increases** Box Office
+    by 0.055%.
+-   putting rate of Over 12 **increases** Box office by an average of
+    1.1% as compared to without any rate
+-   putting rate of Over 15 **increases** Box office by an average of
+    1.3% as compared to without any rate
+-   putting genre of Play **increases** Box office by an average of
+    46.7% as compared to without any genre
+-   putting genre of Musical **increases** Box office by an average of
+    16.2% as compared to without any genre
+-   putting genre of Erotic **decreases** Box office by an average of
+    13.5% as compared to without any genre
+-   putting nationality of Japan **increases** Box office by an average
+    of 1.7% as compared to without any nationality
+-   putting nationality of Korea **decreases** Box office by an average
+    of 2.3% as compared to without any nationality
+-   putting Artistic **increases** Box office by an average of 4.5% as
     compared to without any Artistic or not
--   putting genre of Documentary increases Box office by an average of
-    3.5% as compared to without any genre
--   putting nationality of USA increases Box office by an average of
+-   putting genre of Documentary **increases** Box office by an average
+    of 3.5% as compared to without any genre
+-   putting nationality of USA **increases** Box office by an average of
     0.4% as compared to without any nationality
+
+The result from the regression is quite different from our expectation.
+
+(it is obvious that audience and number of screen has positive effect on
+box office)
+
+The table describes factors for successful movie based on expectation
+and result of the regression.
+
++-----------------------+----------------------+-----------------------+
+| Index                 | Anticipated          | Result                |
++:=====================:+:====================:+:=====================:+
+| Rate                  | Over 12              | Over 12               |
+|                       |                      |                       |
+|                       | Over 15              | Over 15               |
++-----------------------+----------------------+-----------------------+
+| Genre                 | Historic             | Play                  |
+|                       |                      |                       |
+|                       | Adventure            | Musical               |
+|                       |                      |                       |
+|                       | Crime                |                       |
++-----------------------+----------------------+-----------------------+
+| Nationality           | Korea                | USA                   |
+|                       |                      |                       |
+|                       | USA                  |                       |
++-----------------------+----------------------+-----------------------+
+| Artistic              | Not artistic         | Artistic              |
++-----------------------+----------------------+-----------------------+
+
+## Conclusion
+
+Movie industry was already in danger from the introduction of
+smartphone. Covid 19 made the situation much serious.
+
+When you are wondering what movies to distribute in Korea, consider
+these:
+
+1.  Movies that can be distributed not only to theater but also OTT
+    services
+
+2.  check descriptions of movies
+
+    1.  is the movie rated as over 12 or over 15?
+
+    2.  is the movie has genre of musical or play?
+
+    3.  is the movie made in USA?
+
+    4.  is the movie artistic?
