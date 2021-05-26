@@ -170,6 +170,7 @@ pre code {
 
 <div id="description" class="section level1">
 <h1>Description</h1>
+<p>Team 7 consists of 3 members: HEO ShinIl (Team Leader), KANG MinKyu, JUNG JuWon.</p>
 <p>This document describes processes of data analysis of movie. The data came from Kofic, which is Korean Film Council.</p>
 <p>The data is available on the urls below:</p>
 <ul>
@@ -186,10 +187,9 @@ pre code {
 </div>
 <div id="data-cleaning" class="section level1">
 <h1>Data Cleaning</h1>
-<p>Before loading data, we use readxl package to load them</p>
-<pre class="r"><code>#install.packages(&#39;readxl&#39;)
-#install.packages(&#39;lubridate&#39;)
-library(readxl)
+<p>Raw data has two files: general information of movies and sales information of movies.</p>
+<p>Before using R command, we merged them by using vlookup function in MS office Excel.</p>
+<pre class="r"><code>#install.packages(&#39;lubridate&#39;)
 library(lubridate)</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;lubridate&#39;</code></pre>
@@ -298,8 +298,8 @@ head(df)</code></pre>
 ## </code></pre>
 <p>Not all columns are used in this analysis.</p>
 <p>This Data have some duplicate columns.</p>
-<p>It is because of merging different data into a file.</p>
-<p>Change name of column to be used into English for easier processing.</p>
+<p>It is because of that two files (the general information and the sales information) have some same columns such as directors.</p>
+<p>For columns we use for this analysis, change name of columns into English for easier processing.</p>
 <pre class="r"><code>#colnames(df)
 
 colnames(df)[1] &lt;- &#39;Name&#39;
@@ -329,7 +329,8 @@ colnames(df_edit_col)</code></pre>
 <pre><code>## [1] &quot;Name&quot;          &quot;Release_Date&quot;  &quot;Nationality&quot;   &quot;Total_screens&quot;
 ## [5] &quot;Box_office&quot;    &quot;Audience&quot;      &quot;Genre&quot;         &quot;Rate&quot;         
 ## [9] &quot;Artistic&quot;</code></pre>
-<p>Convert Release Date from numeric to as.Date</p>
+<p>The column ‘Release Date’ is recorded as integer value, which is days after 1900/01/01.</p>
+<p>Convert Release Date from numeric to visible format by using as.Date.</p>
 <pre class="r"><code>df_edit_col$Release_Date &lt;- ymd(df_edit_col$Release_Date)</code></pre>
 <pre><code>## Warning: 56676 failed to parse.</code></pre>
 <pre class="r"><code>class(df_edit_col$Release_Date)</code></pre>
@@ -345,7 +346,7 @@ colnames(df_edit_col)</code></pre>
 <p>Skip rows with NAs’</p>
 <pre class="r"><code>df_skip_na &lt;- na.omit(df_edit_col)</code></pre>
 <p>After, we identified rows with all 0s in Box Office, Audience, and # of screens.</p>
-<p>We concluded that these are missing values or movies were listed on Kofic but didn’t be shown to the audience.</p>
+<p>We concluded that these are missing values or movies were listed on Kofic (Korean Film Council) but didn’t be shown to the audience.</p>
 <p>So, we skip these rows.</p>
 <pre class="r"><code>df_skip_na_0s &lt;- df_skip_na %&gt;%
   filter(Total_screens &gt; 0 &amp; Box_office &gt; 0 &amp;Audience &gt; 0)</code></pre>
@@ -358,11 +359,14 @@ colnames(df_edit_col)</code></pre>
 <h1>Analysis</h1>
 <pre class="r"><code>library(lubridate)
 library(dplyr)</code></pre>
-<div id="impact-of-covid19-on-movie-industry." class="section level3">
-<h3>Impact of Covid19 on Movie Industry.</h3>
+<div id="time-series-analysis-impact-of-covid19-on-movie-industry" class="section level3">
+<h3>Time Series Analysis: Impact of Covid19 on Movie Industry</h3>
 <p>Covid 19 prevents people from gathering in a place. Lots of industries have gotten damages. Film Industry is one of the damaged. In this part, we are going to identify how much film industry is shrinked by looking at Box Office by Year.</p>
+<p>At first, we need to extract year information from each movie.</p>
+<p>We made new column on dataset to store the extracted values, which is year of each movie.</p>
 <pre class="r"><code>df_byYear &lt;- df_skip_na_0s
 df_byYear$Year &lt;- year(df_byYear$Release_Date)</code></pre>
+<p>Based on the information, we used group_by() to combine year information based on its year and calculate average Box office of each year group through summarise function.</p>
 <pre class="r"><code>df_byYear &lt;- df_byYear %&gt;%
   group_by(Year) %&gt;%
   summarise(Count = n(), Mean_Box_Office = mean(Box_office), Total_Box_Office = sum(Box_office))
@@ -408,7 +412,7 @@ df_byYear</code></pre>
 <p>Before using linear regression, we are going to anticipate what factors are significant for Box Office.</p>
 <div id="genre" class="section level3">
 <h3>Genre</h3>
-<p>In genre, we anticipate that Action and SF is significant for creating better Box Office result. Action and Sf has characteristic of low burden on watching them. Usually, People are not required to concentrate on a movie when they are watching Action or Sf genres.</p>
+<p>In genre, we anticipate that Action and SF is significant for creating better Box Office result. Action and Sf has characteristic of low burden on watching them. Usually, People are not required to concentrate on a movie when they are watching Action or SF genres.</p>
 <p>Because this data is recorded in Korean, we convert genre into English.</p>
 <pre class="r"><code>df_byGenre &lt;- df_skip_na_0s;
 df_byGenre[df_byGenre[&#39;Genre&#39;]==&#39;가족&#39;,&#39;Genre&#39;] &lt;- &quot;Family&quot;

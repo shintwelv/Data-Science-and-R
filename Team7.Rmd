@@ -10,6 +10,9 @@ editor_options:
 
 # Description
 
+Team 7 consists of 3 members: HEO ShinIl (Team Leader), KANG MinKyu,
+JUNG JuWon.
+
 This document describes processes of data analysis of movie. The data
 came from Kofic, which is Korean Film Council.
 
@@ -28,12 +31,14 @@ The data is available on the urls below:
 
 # Data Cleaning
 
-Before loading data, we use readxl package to load them
+Raw data has two files: general information of movies and sales
+information of movies.
+
+Before using R command, we merged them by using vlookup function in MS
+office Excel.
 
 ```{r}
-#install.packages('readxl')
 #install.packages('lubridate')
-library(readxl)
 library(lubridate)
 library(dplyr)
 library(ggplot2)
@@ -59,9 +64,11 @@ Not all columns are used in this analysis.
 
 This Data have some duplicate columns.
 
-It is because of merging different data into a file.
+It is because of that two files (the general information and the sales
+information) have some same columns such as directors.
 
-Change name of column to be used into English for easier processing.
+For columns we use for this analysis, change name of columns into
+English for easier processing.
 
 ```{r}
 #colnames(df)
@@ -90,7 +97,10 @@ df_edit_col <- df %>% select(Name, Release_Date, Nationality,
 colnames(df_edit_col)
 ```
 
-Convert Release Date from numeric to as.Date
+The column 'Release Date' is recorded as integer value, which is days
+after 1900/01/01.
+
+Convert Release Date from numeric to visible format by using as.Date.
 
 ```{r}
 df_edit_col$Release_Date <- ymd(df_edit_col$Release_Date)
@@ -119,7 +129,7 @@ After, we identified rows with all 0s in Box Office, Audience, and \# of
 screens.
 
 We concluded that these are missing values or movies were listed on
-Kofic but didn't be shown to the audience.
+Kofic (Korean Film Council) but didn't be shown to the audience.
 
 So, we skip these rows.
 
@@ -141,17 +151,26 @@ library(lubridate)
 library(dplyr)
 ```
 
-### Impact of Covid19 on Movie Industry.
+### Time Series Analysis: Impact of Covid19 on Movie Industry
 
 Covid 19 prevents people from gathering in a place. Lots of industries
 have gotten damages. Film Industry is one of the damaged. In this part,
 we are going to identify how much film industry is shrinked by looking
 at Box Office by Year.
 
+At first, we need to extract year information from each movie.
+
+We made new column on dataset to store the extracted values, which is
+year of each movie.
+
 ```{r}
 df_byYear <- df_skip_na_0s
 df_byYear$Year <- year(df_byYear$Release_Date)
 ```
+
+Based on the information, we used group_by() to combine year information
+based on its year and calculate average Box office of each year group
+through summarise function.
 
 ```{r}
 df_byYear <- df_byYear %>%
@@ -205,7 +224,7 @@ are significant for Box Office.
 In genre, we anticipate that Action and SF is significant for creating
 better Box Office result. Action and Sf has characteristic of low burden
 on watching them. Usually, People are not required to concentrate on a
-movie when they are watching Action or Sf genres.
+movie when they are watching Action or SF genres.
 
 Because this data is recorded in Korean, we convert genre into English.
 
