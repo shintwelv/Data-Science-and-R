@@ -974,18 +974,18 @@ summary(Movie_reg)</code></pre>
 <li>A one-percent increase in number of screens <strong>increases</strong> Box Office by 0.055%.</li>
 <li>putting rate of Over 12 <strong>increases</strong> Box office by an average of 1.1% as compared to without any rate</li>
 <li>putting rate of Over 15 <strong>increases</strong> Box office by an average of 1.3% as compared to without any rate</li>
-<li>putting genre of Play <strong>increases</strong> Box office by an average of 46.7% as compared to without any genre</li>
-<li>putting genre of Musical <strong>increases</strong> Box office by an average of 16.2% as compared to without any genre</li>
-<li>putting genre of Erotic <strong>decreases</strong> Box office by an average of 13.5% as compared to without any genre</li>
+<li>putting genre of Play <strong>increases</strong> Box office by an average of 46.6% as compared to without any genre</li>
+<li>putting genre of Musical <strong>increases</strong> Box office by an average of 16.0% as compared to without any genre</li>
+<li>putting genre of Erotic <strong>decreases</strong> Box office by an average of 13.7% as compared to without any genre</li>
 <li>putting nationality of Japan <strong>increases</strong> Box office by an average of 1.7% as compared to without any nationality</li>
 <li>putting nationality of Korea <strong>decreases</strong> Box office by an average of 2.3% as compared to without any nationality</li>
 <li>putting Artistic <strong>increases</strong> Box office by an average of 4.5% as compared to without any Artistic or not</li>
-<li>putting genre of Documentary <strong>increases</strong> Box office by an average of 3.5% as compared to without any genre</li>
+<li>putting genre of Documentary <strong>increases</strong> Box office by an average of 3.3% as compared to without any genre</li>
 <li>putting nationality of USA <strong>increases</strong> Box office by an average of 0.4% as compared to without any nationality</li>
 </ul>
 <p>The result from the regression is quite different from our expectation.</p>
 <p>(it is obvious that audience and number of screen has positive effect on box office)</p>
-<p>The table describes factors for successful movie based on expectation and result of the regression.</p>
+<p>The table below describes factors for successful movie based on expectation and result of the regression.</p>
 <table style="width:99%;">
 <colgroup>
 <col width="33%" />
@@ -1013,13 +1013,15 @@ summary(Movie_reg)</code></pre>
 <p>Adventure</p>
 <p>Crime</p></td>
 <td align="center"><p>Play</p>
-<p>Musical</p></td>
+<p>Musical</p>
+<p>Documentary</p></td>
 </tr>
 <tr class="odd">
 <td align="center">Nationality</td>
 <td align="center"><p>Korea</p>
 <p>USA</p></td>
-<td align="center">USA</td>
+<td align="center"><p>USA</p>
+<p>Japan</p></td>
 </tr>
 <tr class="even">
 <td align="center">Artistic</td>
@@ -1040,8 +1042,8 @@ summary(Movie_reg)</code></pre>
 <li><p>check descriptions of movies</p>
 <ol style="list-style-type: decimal">
 <li><p>is the movie rated as over 12 or over 15?</p></li>
-<li><p>is the movie has genre of musical or play?</p></li>
-<li><p>is the movie made in USA?</p></li>
+<li><p>is the movie has genre of musical or play or documentary?</p></li>
+<li><p>is the movie made in USA or Japan?</p></li>
 <li><p>is the movie artistic?</p></li>
 </ol></li>
 </ol>

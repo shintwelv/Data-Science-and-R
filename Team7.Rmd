@@ -809,11 +809,11 @@ is statistically significant.
 -   putting rate of Over 15 **increases** Box office by an average of
     1.3% as compared to without any rate
 -   putting genre of Play **increases** Box office by an average of
-    46.7% as compared to without any genre
+    46.6% as compared to without any genre
 -   putting genre of Musical **increases** Box office by an average of
-    16.2% as compared to without any genre
+    16.0% as compared to without any genre
 -   putting genre of Erotic **decreases** Box office by an average of
-    13.5% as compared to without any genre
+    13.7% as compared to without any genre
 -   putting nationality of Japan **increases** Box office by an average
     of 1.7% as compared to without any nationality
 -   putting nationality of Korea **decreases** Box office by an average
@@ -821,7 +821,7 @@ is statistically significant.
 -   putting Artistic **increases** Box office by an average of 4.5% as
     compared to without any Artistic or not
 -   putting genre of Documentary **increases** Box office by an average
-    of 3.5% as compared to without any genre
+    of 3.3% as compared to without any genre
 -   putting nationality of USA **increases** Box office by an average of
     0.4% as compared to without any nationality
 
@@ -830,8 +830,8 @@ The result from the regression is quite different from our expectation.
 (it is obvious that audience and number of screen has positive effect on
 box office)
 
-The table describes factors for successful movie based on expectation
-and result of the regression.
+The table below describes factors for successful movie based on
+expectation and result of the regression.
 
 +-----------------------+----------------------+-----------------------+
 | Index                 | Anticipated          | Result                |
@@ -844,11 +844,11 @@ and result of the regression.
 |                       |                      |                       |
 |                       | Adventure            | Musical               |
 |                       |                      |                       |
-|                       | Crime                |                       |
+|                       | Crime                | Documentary           |
 +-----------------------+----------------------+-----------------------+
 | Nationality           | Korea                | USA                   |
 |                       |                      |                       |
-|                       | USA                  |                       |
+|                       | USA                  | Japan                 |
 +-----------------------+----------------------+-----------------------+
 | Artistic              | Not artistic         | Artistic              |
 +-----------------------+----------------------+-----------------------+
@@ -868,8 +868,8 @@ these:
 
     1.  is the movie rated as over 12 or over 15?
 
-    2.  is the movie has genre of musical or play?
+    2.  is the movie has genre of musical or play or documentary?
 
-    3.  is the movie made in USA?
+    3.  is the movie made in USA or Japan?
 
     4.  is the movie artistic?
